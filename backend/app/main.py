@@ -2,6 +2,7 @@ from fastapi import FastAPI, HTTPException
 from db.database import check_db_connection
 from fastapi.middleware.cors import CORSMiddleware
 from core.config import FRONTEND_URL
+from users.handler import user_router
 
 app = FastAPI()
 
@@ -28,3 +29,6 @@ async def heartbeat():
         return {"message": "Database connection is healthy."}
     else:
         raise HTTPException(status_code=500, detail="Database connection error")
+
+
+app.include_router(user_router)
