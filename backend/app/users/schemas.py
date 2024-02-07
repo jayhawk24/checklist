@@ -1,6 +1,12 @@
 from pydantic import BaseModel, constr, EmailStr
 
 
+class UserSchema(BaseModel):
+    id: str
+    name: str
+    email: str
+
+
 class SignUpRequestSchema(BaseModel):
     name: constr(min_length=3, max_length=50)
     email: EmailStr

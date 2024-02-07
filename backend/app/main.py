@@ -3,6 +3,7 @@ from db.database import check_db_connection
 from fastapi.middleware.cors import CORSMiddleware
 from core.config import FRONTEND_URL
 from users.handler import user_router
+from auth.handler import auth_router
 
 app = FastAPI()
 
@@ -32,3 +33,4 @@ async def heartbeat():
 
 
 app.include_router(user_router)
+app.include_router(auth_router)

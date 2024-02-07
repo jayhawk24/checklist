@@ -12,6 +12,7 @@ from users.models import Users
 from fastapi import Depends, HTTPException, status
 from jose import jwt
 from fastapi.security import OAuth2PasswordBearer
+from commons.enums import TokenKind
 
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
@@ -20,8 +21,10 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 def create_access_token(data: dict):
     to_encode = data.copy()
 
-    expire = datetime.utcnow() + timedelta(minutes=int(JWT_ACCESS_TOKEN_EXPIRE_MINUTES))
-    to_encode.update({"exp": expire.strftime("%Y-%m-%d %H:%M:%S")})
+    expire = datetime.now() + timedelta(minutes=int(JWT_ACCESS_TOKEN_EXPIRE_MINUTES))
+    to_encode.update(
+        {"exp": int(expire.timestamp()), "token_kind": TokenKind.AccessToken.value}
+    )
 
     return jwt.encode(to_encode, JWT_SECRET_KEY, JWT_ALGORITHM)
 
@@ -29,15 +32,15 @@ def create_access_token(data: dict):
 def create_refresh_token(data: dict):
     to_encode = data.copy()
 
-    expire = datetime.utcnow() + timedelta(
-        minutes=int(JWT_REFRESH_TOKEN_EXPIRE_MINUTES)
+    expire = datetime.now() + timedelta(minutes=int(JWT_REFRESH_TOKEN_EXPIRE_MINUTES))
+    to_encode.update(
+        {"exp": int(expire.timestamp()), "token_kind": TokenKind.RefreshToken.value}
     )
-    to_encode.update({"exp": expire.strftime("%Y-%m-%d %H:%M:%S")})
 
     return jwt.encode(to_encode, JWT_SECRET_KEY, JWT_ALGORITHM)
 
 
-def verify_access_token(token: str, credentials_exception):
+def verify_token(token: str, credentials_exception):
     try:
         payload = jwt.decode(token, JWT_SECRET_KEY, algorithms=JWT_ALGORITHM)
 
@@ -45,7 +48,7 @@ def verify_access_token(token: str, credentials_exception):
         if id is None:
             raise credentials_exception
 
-        token_data = TokenData(id=id)
+        token_data = TokenData(id=id, **payload)
     except jwt.JWTError:
         raise credentials_exception
 
@@ -61,7 +64,7 @@ def get_current_user(
         headers={"WWW-Authenticate": "Bearer"},
     )
 
-    token = verify_access_token(token, credentials_exception)
+    token = verify_token(token, credentials_exception)
     user = db.query(Users).filter(Users.id == token.id).first()
 
     return user
