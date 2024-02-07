@@ -1,7 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
-from auth.tokens import verify_token
-from auth.tokens import create_refresh_token
+from auth.tokens import verify_token, create_access_token
 from db.database import get_db
 from commons.enums import TokenKind
 from auth.schemas import RefreshTokenResponseSchema, RefreshTokenRequestSchema
@@ -18,6 +17,6 @@ def refresh_token(payload: RefreshTokenRequestSchema, db: Session = Depends(get_
     if token_data.token_kind != TokenKind.RefreshToken:
         raise credentials_exception
 
-    refresh_token = create_refresh_token(data={"user_id": token_data.id})
+    access_token = create_access_token(data={"user_id": token_data.id})
 
-    return RefreshTokenResponseSchema(refresh_token=refresh_token, token_type="bearer")
+    return RefreshTokenResponseSchema(access_token=access_token, token_type="bearer")

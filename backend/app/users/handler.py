@@ -5,11 +5,12 @@ from users.schemas import (
     SignUpResponseSchema,
     LoginResponseSchema,
     LoginRequestSchema,
+    UserSchema,
 )
 from sqlalchemy.orm import Session
 from db.database import get_db
 from auth.utils import verify_password, hash_pass
-from auth.tokens import create_access_token, create_refresh_token
+from auth.tokens import create_access_token, create_refresh_token, get_current_user
 
 user_router = APIRouter(prefix="/users", tags=["Users"])
 
@@ -67,3 +68,15 @@ async def signup(payload: SignUpRequestSchema, db: Session = Depends(get_db)):
         )
 
     return SignUpResponseSchema(detail="User created successfully.")
+
+
+@user_router.get("/me")
+async def get_me(
+    user: Users = Depends(get_current_user), db: Session = Depends(get_db)
+) -> UserSchema:
+    if not user or (user.id is None):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid credentials."
+        )
+
+    return user

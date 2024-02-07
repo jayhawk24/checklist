@@ -1,10 +1,13 @@
-from pydantic import BaseModel, constr, EmailStr
+from pydantic import BaseModel, constr, EmailStr, ConfigDict
 
 
 class UserSchema(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
     id: str
     name: str
     email: str
+    is_active: bool
 
 
 class SignUpRequestSchema(BaseModel):
