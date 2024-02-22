@@ -3,8 +3,12 @@ import { Button, InputField } from '@cred/neopop-web/lib/components';
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { useSigninMutationFn } from "../service/login-services"
 import { useMutation } from '@tanstack/react-query';
+import toast from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
+import { postLogin } from '@/utils/auth';
 
 export default function Login() {
+    const router = useRouter()
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
 
@@ -15,7 +19,17 @@ export default function Login() {
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        signinMutation.mutate({ email, password })
+        toast.promise(signinMutation.mutateAsync({ email, password }, {
+            onSuccess: ({ access_token, refresh_token }) => {
+                postLogin(access_token, refresh_token)
+                router.push("/checklist")
+            }
+        }), {
+            loading: "Logging in...",
+            success: "Login successful.",
+            error: "Invalid email or password."
+        })
+
     }
 
     return <div className='flex flex-col justify-between h-full'>
