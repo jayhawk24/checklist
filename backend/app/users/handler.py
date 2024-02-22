@@ -45,6 +45,7 @@ async def login(
         httponly=True,
         secure=True,
         samesite="strict",
+        path="/",
         expires=JWT_ACCESS_TOKEN_EXPIRE_MINUTES * 60,
     )
 
