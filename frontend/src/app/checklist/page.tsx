@@ -11,7 +11,10 @@ const TasksPage = () => {
 
     console.log(userProfile.data)
     return (
-        <div>TasksPage</div>
+        <>
+            <div>Checklist</div>
+            <div>Welcome {userProfile.data?.name}</div>
+        </>
     )
 }
 

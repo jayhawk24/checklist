@@ -2,15 +2,24 @@
 import { Button, InputField } from '@cred/neopop-web/lib/components';
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { useSigninMutationFn } from "../service/login-services"
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 import { postLogin } from '@/utils/auth';
+import { getProfile } from '@/service/profile-service';
 
 export default function Login() {
     const router = useRouter()
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+
+    const userProfile = useQuery({
+        queryKey: ["userProfile"],
+        queryFn: getProfile
+    });
+    if (userProfile.data) {
+        router.push("/checklist")
+    }
 
     const signinMutation = useMutation({
         mutationKey: ["signin"],
