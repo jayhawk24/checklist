@@ -1,10 +1,13 @@
 import React from 'react'
 
+type Props = {
+    children: React.ReactNode;
+}
 
-const TasksLayoutPage = () => {
+const TasksLayoutPage = ({ children }: Props) => {
     return (
         <div className='flex flex-col justify-between h-full'>
-            <h1 className='font-bold text-xl'>checklist</h1>
+            {children}
         </div>
     )
 }

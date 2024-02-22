@@ -10,9 +10,13 @@ export const useSigninMutationFn = async (variables: {
     password: string;
 }) => {
     const { email, password } = variables;
-    const { data } = await axiosInstance.post<LoginResponse>("/users/signin", {
-        email,
-        password
-    });
+    const { data } = await axiosInstance.post<LoginResponse>(
+        "/users/signin",
+        {
+            email,
+            password
+        },
+        { withCredentials: true }
+    );
     return data;
 };
