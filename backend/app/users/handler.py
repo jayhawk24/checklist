@@ -1,5 +1,5 @@
 from users.models import Users
-from fastapi import Depends, HTTPException, status, APIRouter
+from fastapi import Depends, HTTPException, status, APIRouter, Response
 from users.schemas import (
     SignUpRequestSchema,
     SignUpResponseSchema,
@@ -11,12 +11,15 @@ from sqlalchemy.orm import Session
 from db.database import get_db
 from auth.utils import verify_password, hash_pass
 from auth.tokens import create_access_token, create_refresh_token, get_current_user
+from core.config import JWT_ACCESS_TOKEN_EXPIRE_MINUTES
 
 user_router = APIRouter(prefix="/users", tags=["Users"])
 
 
 @user_router.post("/signin", response_model=LoginResponseSchema)
-async def login(payload: LoginRequestSchema, db: Session = Depends(get_db)):
+async def login(
+    payload: LoginRequestSchema, response: Response, db: Session = Depends(get_db)
+):
     """
     This API is used to login users to the application
     """
@@ -33,6 +36,17 @@ async def login(payload: LoginRequestSchema, db: Session = Depends(get_db)):
 
     access_token = create_access_token(data={"user_id": user.id})
     refresh_token = create_refresh_token(data={"user_id": user.id})
+
+    response.headers["Authorization"] = f"Bearer {access_token}"
+
+    response.set_cookie(
+        "access_token",
+        access_token,
+        httponly=True,
+        secure=True,
+        samesite="strict",
+        expires=JWT_ACCESS_TOKEN_EXPIRE_MINUTES * 60,
+    )
 
     return LoginResponseSchema(
         access_token=access_token, refresh_token=refresh_token, token_type="bearer"

@@ -9,10 +9,11 @@ from core.config import (
 from db.database import get_db
 from sqlalchemy.orm import Session
 from users.models import Users
-from fastapi import Depends, HTTPException, status
+from fastapi import Depends, HTTPException, status, Cookie, Request
 from jose import jwt
 from fastapi.security import OAuth2PasswordBearer
 from commons.enums import TokenKind
+from typing import Annotated
 
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
@@ -56,7 +57,9 @@ def verify_token(token: str, credentials_exception):
 
 
 def get_current_user(
-    token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)
+    request: Request,
+    access_token: Annotated[str | None, Cookie()],
+    db: Session = Depends(get_db),
 ):
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
@@ -64,7 +67,10 @@ def get_current_user(
         headers={"WWW-Authenticate": "Bearer"},
     )
 
-    token = verify_token(token, credentials_exception)
-    user = db.query(Users).filter(Users.id == token.id).first()
+    access_token = verify_token(access_token, credentials_exception)
+    user = db.query(Users).filter(Users.id == access_token.id).first()
+    if not user:
+        raise credentials_exception
 
+    request.state.user = user
     return user
