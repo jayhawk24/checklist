@@ -1,4 +1,5 @@
 from users.models import Users
+from datetime import timedelta, datetime
 from fastapi import Depends, HTTPException, status, APIRouter, Response
 from users.schemas import (
     SignUpRequestSchema,
@@ -44,8 +45,11 @@ async def login(
         access_token,
         httponly=True,
         secure=True,
+        samesite="none",
         path="/",
-        expires=JWT_ACCESS_TOKEN_EXPIRE_MINUTES * 60,
+        expires=(
+            datetime.utcnow() + timedelta(minutes=int(JWT_ACCESS_TOKEN_EXPIRE_MINUTES))
+        ).strftime("%a, %d %b %Y %H:%M:%S GMT"),
     )
 
     return LoginResponseSchema(
