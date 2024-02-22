@@ -1,4 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException, status, Response
+from datetime import datetime, timedelta
 from sqlalchemy.orm import Session
 from auth.tokens import verify_token, create_access_token
 from db.database import get_db
@@ -30,7 +31,9 @@ def refresh_token(
         secure=True,
         samesite="strict",
         path="/",
-        expires=JWT_ACCESS_TOKEN_EXPIRE_MINUTES * 60,
+        expires=(
+            datetime.utcnow() + timedelta(minutes=int(JWT_ACCESS_TOKEN_EXPIRE_MINUTES))
+        ).strftime("%Y-%m-%d %H:%M:%S"),
     )
 
     return RefreshTokenResponseSchema(access_token=access_token, token_type="bearer")

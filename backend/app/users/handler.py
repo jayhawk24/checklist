@@ -12,7 +12,7 @@ from sqlalchemy.orm import Session
 from db.database import get_db
 from auth.utils import verify_password, hash_pass
 from auth.tokens import create_access_token, create_refresh_token, get_current_user
-from core.config import JWT_ACCESS_TOKEN_EXPIRE_MINUTES
+from core.config import FRONTEND_URL, JWT_ACCESS_TOKEN_EXPIRE_MINUTES
 
 user_router = APIRouter(prefix="/users", tags=["Users"])
 
@@ -49,7 +49,7 @@ async def login(
         path="/",
         expires=(
             datetime.utcnow() + timedelta(minutes=int(JWT_ACCESS_TOKEN_EXPIRE_MINUTES))
-        ).strftime("%a, %d %b %Y %H:%M:%S GMT"),
+        ).strftime("%Y-%m-%d %H:%M:%S"),
     )
 
     return LoginResponseSchema(
