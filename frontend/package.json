@@ -10,11 +10,13 @@
   },
   "dependencies": {
     "@cred/neopop-web": "^1.0.0",
+    "@next/font": "^14.1.0",
     "@tanstack/react-query": "^5.20.5",
     "axios": "^1.6.7",
     "next": "14.1.0",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "react-hot-toast": "^2.4.1"
   },
   "devDependencies": {
     "@types/node": "^20",
