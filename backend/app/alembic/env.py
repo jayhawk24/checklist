@@ -63,6 +63,7 @@ def run_migrations_online() -> None:
 
     """
     from users.models import Users
+    from tasks.models import Tasks
 
     connectable = engine_from_config(
         config.get_section(config.config_ini_section, {}),

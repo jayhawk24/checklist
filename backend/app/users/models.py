@@ -1,6 +1,7 @@
 from sqlalchemy import Column, String, Boolean
 from db.database import Base
 from commons.utils import get_uuid
+from sqlalchemy.orm import relationship
 
 
 class Users(Base):
@@ -11,3 +12,5 @@ class Users(Base):
     email = Column(String(50), unique=True, index=True)
     password = Column(String, nullable=False)
     is_active = Column(Boolean, default=True)
+
+    tasks = relationship("Tasks", back_populates="user")

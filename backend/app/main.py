@@ -4,6 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from core.config import FRONTEND_URL
 from users.handler import user_router
 from auth.handler import auth_router
+from tasks.handler import tasks_router
 
 app = FastAPI()
 
@@ -34,3 +35,4 @@ async def heartbeat():
 
 app.include_router(user_router)
 app.include_router(auth_router)
+app.include_router(tasks_router)
