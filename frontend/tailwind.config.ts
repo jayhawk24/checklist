@@ -1,5 +1,14 @@
 import type { Config } from "tailwindcss";
 
+export const primaryColors = {
+    DEFAULT: "#006494",
+    "200": "#00A6FB",
+    "400": "#0582CA",
+    "600": "#006494",
+    "800": "#003554",
+    "900": "#051923"
+};
+
 const config: Config = {
     content: [
         "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -12,14 +21,7 @@ const config: Config = {
                 sans: ["var(--font-gilroy)"]
             },
             colors: {
-                primary: {
-                    DEFAULT: "#006494",
-                    "200": "#00A6FB",
-                    "400": "#0582CA",
-                    "600": "#006494",
-                    "800": "#003554",
-                    "900": "#051923"
-                }
+                primary: primaryColors
             }
         }
     },

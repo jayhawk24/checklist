@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@cred/neopop-web": "^1.0.0",
+    "@headlessui/react": "^1.7.17",
     "@next/font": "^14.1.0",
     "@tanstack/react-query": "^5.20.5",
     "axios": "^1.6.7",

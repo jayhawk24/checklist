@@ -4,6 +4,9 @@ import {
     ElevatedCard,
 } from '@cred/neopop-web/lib/components';
 import { Task } from "@/service/tasks-services"
+import { primaryColors } from '../../../tailwind.config';
+import { cardColorConfig } from '../Commons/colorConfig';
+import ChecklistItem from './ChecklistItem';
 
 type Props = {
     tasks: Task[] | undefined
@@ -11,18 +14,8 @@ type Props = {
 
 const Checklist = ({ tasks }: Props) => {
     return tasks?.map(
-        (task) => (<ElevatedCard
-            backgroundColor="#AE275F"
-            edgeColors={{
-                bottom: '#5C1532',
-                right: '#851E49',
-            }}
-            style={{
-                width: '230px',
-            }}
-        >
-            {task.title}
-        </ElevatedCard>
+        (task) => (
+            <ChecklistItem task={task} />
         )
     )
 }
