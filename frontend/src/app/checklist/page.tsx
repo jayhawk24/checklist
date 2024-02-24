@@ -1,12 +1,23 @@
 "use client"
+import LoadingSpinner from '@/components/Commons/LoadingSpinner'
 import Checklist from '@/components/checklist/Checklist'
 import { useUserProfile } from '@/service/profile-service'
 import { useUserTasks } from '@/service/tasks-services'
+import { useRouter } from 'next/navigation'
 import React from 'react'
 
 const TasksPage = () => {
+    const router = useRouter()
     const userProfile = useUserProfile()
     const userTasks = useUserTasks()
+
+    if (userProfile.isError) {
+        router.push('/login')
+    }
+
+    if (userProfile.isLoading) {
+        return <LoadingSpinner />
+    }
 
     return (
         <>
