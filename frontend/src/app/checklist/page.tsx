@@ -1,15 +1,10 @@
 "use client"
-import { getProfile } from '@/service/profile-service'
-import { useQuery } from '@tanstack/react-query'
+import { useUserProfile } from '@/service/profile-service'
 import React from 'react'
 
 const TasksPage = () => {
-    const userProfile = useQuery({
-        queryKey: ["userProfile"],
-        queryFn: getProfile
-    });
+    const userProfile = useUserProfile()
 
-    console.log(userProfile.data)
     return (
         <>
             <div>Checklist</div>

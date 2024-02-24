@@ -1,3 +1,4 @@
+import { useQuery } from "@tanstack/react-query";
 import axiosInstance from ".";
 
 type UserProfile = {
@@ -12,3 +13,10 @@ export const getProfile = async () => {
     localStorage.setItem("user", JSON.stringify(data));
     return data;
 };
+
+export const useUserProfile = () =>
+    useQuery({
+        queryKey: ["userProfile"],
+        queryFn: getProfile,
+        staleTime: Infinity
+    });

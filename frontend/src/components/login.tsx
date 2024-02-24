@@ -1,43 +1,30 @@
 "use client"
 import { Button, InputField } from '@cred/neopop-web/lib/components';
 import { ChangeEvent, FormEvent, useState } from 'react';
-import { useSigninMutationFn } from "../service/login-services"
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useSigninMutation } from "../service/login-services"
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
-import { postLogin } from '@/utils/auth';
-import { getProfile } from '@/service/profile-service';
+import { useUserProfile } from '@/service/profile-service';
 
 export default function Login() {
     const router = useRouter()
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const userProfile = useUserProfile()
 
-    const userProfile = useQuery({
-        queryKey: ["userProfile"],
-        queryFn: getProfile
-    });
     if (userProfile.data) {
         router.push("/checklist")
     }
 
-    const signinMutation = useMutation({
-        mutationKey: ["signin"],
-        mutationFn: useSigninMutationFn
-    })
+    const signinMutation = useSigninMutation()
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        toast.promise(signinMutation.mutateAsync({ email, password }, {
-            onSuccess: ({ access_token, refresh_token }) => {
-                postLogin(access_token, refresh_token)
-                router.push("/checklist")
-            }
-        }), {
+        toast.promise(signinMutation.mutateAsync({ email, password }), {
             loading: "Logging in...",
             success: "Login successful.",
             error: "Invalid email or password."
-        })
+        }).then(() => router.push("/checklist"))
 
     }
 

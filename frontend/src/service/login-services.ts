@@ -1,4 +1,6 @@
+import { useMutation } from "@tanstack/react-query";
 import axiosInstance from ".";
+import { postLogin } from "@/utils/auth";
 
 type LoginResponse = {
     access_token: string;
@@ -20,3 +22,12 @@ export const useSigninMutationFn = async (variables: {
     );
     return data;
 };
+
+export const useSigninMutation = () =>
+    useMutation({
+        mutationKey: ["signin"],
+        mutationFn: useSigninMutationFn,
+        onSuccess: ({ access_token, refresh_token }) => {
+            postLogin(access_token, refresh_token);
+        }
+    });
