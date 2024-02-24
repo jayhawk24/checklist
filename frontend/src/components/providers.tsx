@@ -3,7 +3,13 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import React from 'react'
 
-const client = new QueryClient()
+const client = new QueryClient({
+    defaultOptions: {
+        queries: {
+            retry: 3,
+        }
+    }
+})
 
 function Providers({ children }: { children: React.ReactNode }) {
     return (

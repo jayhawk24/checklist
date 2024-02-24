@@ -11,10 +11,15 @@ const config: Config = {
             fontFamily: {
                 sans: ["var(--font-gilroy)"]
             },
-            backgroundImage: {
-                "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-                "gradient-conic":
-                    "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))"
+            colors: {
+                primary: {
+                    DEFAULT: "#006494",
+                    "200": "#00A6FB",
+                    "400": "#0582CA",
+                    "600": "#006494",
+                    "800": "#003554",
+                    "900": "#051923"
+                }
             }
         }
     },
