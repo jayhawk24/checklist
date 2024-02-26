@@ -2,17 +2,13 @@ import { Task } from '@/service/tasks-services'
 import { Menu } from '@headlessui/react'
 import React from 'react'
 import Dropdown, {
-    ArchiveActiveIcon,
     EditActiveIcon,
     EditInactiveIcon,
-    ArchiveInactiveIcon,
     DeleteInactiveIcon,
     DeleteActiveIcon,
     DuplicateActiveIcon,
     DuplicateInactiveIcon,
-    MoveActiveIcon,
-    MoveInactiveIcon
-} from '../Commons/Dropdown'
+} from '../Commons/dropdown'
 
 type Props = {
     task: Task

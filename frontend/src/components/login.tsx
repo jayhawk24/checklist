@@ -1,15 +1,12 @@
 "use client"
-import { Button, InputField } from '@cred/neopop-web/lib/components';
-import { ChangeEvent, FormEvent, useState } from 'react';
 import { useSigninMutation } from "../service/login-services"
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 import { useUserProfile } from '@/service/profile-service';
+import LoginForm from './Login/loginForm';
 
 export default function Login() {
     const router = useRouter()
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
     const userProfile = useUserProfile()
 
     if (userProfile.data) {
@@ -18,8 +15,8 @@ export default function Login() {
 
     const signinMutation = useSigninMutation()
 
-    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
+    const handleSubmit = ({ email, password }: { email: string, password: string }) => {
+
         toast.promise(signinMutation.mutateAsync({ email, password }), {
             loading: "Logging in...",
             success: "Login successful.",
@@ -29,9 +26,10 @@ export default function Login() {
     }
 
     return <div className='flex flex-col justify-between h-full'>
-        <form onSubmit={e => handleSubmit(e)}>
-            <div className=''>
-                <InputField
+        {/* <form onSubmit={e => handleSubmit(e)}> */}
+        <LoginForm onSubmit={handleSubmit} />
+        <div className=''>
+            {/* <InputField
                     type="email"
                     label="email"
                     placeholder="enter your email"
@@ -47,11 +45,11 @@ export default function Login() {
                     id="password"
                     value={password}
                     onChange={(e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
-                />
+                /> */}
 
-            </div>
-            <div>
-                <Button
+        </div>
+        <div>
+            {/* <Button
                     variant="primary"
                     kind="elevated"
                     size="big"
@@ -62,10 +60,10 @@ export default function Login() {
                     disabled={signinMutation.isPending}
                 >
                     Login
-                </Button>
+                </Button> */}
 
-            </div>
-        </form>
+        </div>
+        {/* </form> */}
     </div>
 
 }

@@ -1,6 +1,6 @@
 "use client"
-import LoadingSpinner from '@/components/Commons/LoadingSpinner'
-import Checklist from '@/components/checklist/Checklist'
+import LoadingSpinner from '@/components/Commons/loadingSpinner'
+import Checklist from '@/components/checklist/checklist'
 import { useUserProfile } from '@/service/profile-service'
 import { useUserTasks } from '@/service/tasks-services'
 import { useRouter } from 'next/navigation'

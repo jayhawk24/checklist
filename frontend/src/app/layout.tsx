@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
 import Providers from "@/components/providers";
 import localFont from 'next/font/local';
 import { Toaster } from "react-hot-toast";
+import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: "Checklist ✅",
@@ -39,7 +39,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <Providers>
-        <body className={gilroy.className}>
+        <body className={cn(`min-h-screen bg-background font-sans ${gilroy.className}`)}>
           {children}
           <Toaster />
         </body>

@@ -1,7 +1,6 @@
 import React from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import { Fragment } from 'react'
-import { Chevron } from '@cred/neopop-web/lib/components';
 
 type Props = {
     children: React.ReactNode
