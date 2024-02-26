@@ -21,9 +21,10 @@ type LoginFormProps = {
 }
 
 const FormSchema = z.object({
-    email: z.string().min(3, {
-        message: "Email must be at least 3 characters.",
-    }),
+    email: z
+        .string()
+        .min(1, { message: "This field has to be filled." })
+        .email("This is not a valid email."),
     password: z.string().min(8, {
         message: "Password must be at least 8 characters.",
     })
@@ -44,15 +45,15 @@ const LoginForm = (props: LoginFormProps) => {
 
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="w-2/3 space-y-6">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
                 <FormField
                     control={form.control}
                     name="email"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Email</FormLabel>
+                            <FormLabel>email</FormLabel>
                             <FormControl>
-                                <Input placeholder="Email" {...field} />
+                                <Input type="email" placeholder="email" {...field} />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -63,15 +64,15 @@ const LoginForm = (props: LoginFormProps) => {
                     name="password"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Password</FormLabel>
+                            <FormLabel>password</FormLabel>
                             <FormControl>
-                                <Input placeholder="Password" {...field} />
+                                <Input type="password" placeholder="enter your password" {...field} />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
                     )}
                 />
-                <Button type="submit">Submit</Button>
+                <Button type="submit">submit</Button>
             </form>
         </Form>
     )

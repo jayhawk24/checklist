@@ -39,7 +39,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <Providers>
-        <body className={cn(`min-h-screen bg-background font-sans ${gilroy.className}`)}>
+        <body className={cn(`min-h-screen bg-background ${gilroy.className}`)}>
           {children}
           <Toaster />
         </body>
