@@ -3,7 +3,7 @@ import { useSigninMutation } from "../service/login-services"
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 import { useUserProfile } from '@/service/profile-service';
-import LoginForm from './Login/loginForm';
+import LoginForm from './forms/loginForm';
 
 export default function Login() {
     const router = useRouter()

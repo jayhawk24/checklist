@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button"
 import {
     Form,
     FormControl,
-    FormDescription,
     FormField,
     FormItem,
     FormLabel,
@@ -53,7 +52,7 @@ const LoginForm = (props: LoginFormProps) => {
                         <FormItem>
                             <FormLabel>email</FormLabel>
                             <FormControl>
-                                <Input type="email" placeholder="email" {...field} />
+                                <Input type="email" placeholder="enter your email" {...field} />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
