@@ -1,3 +1,4 @@
+"use client"
 import { useSigninMutation } from "../service/login-services"
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
@@ -26,7 +27,6 @@ export default function Login() {
 
     return <div className='flex flex-col justify-between h-full'>
         <LoginForm onSubmit={handleSubmit} />
-
     </div>
 
 }

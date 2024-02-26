@@ -4,6 +4,7 @@ import Providers from "@/components/providers";
 import localFont from 'next/font/local';
 import { Toaster } from "react-hot-toast";
 import { cn } from "@/lib/utils";
+import { DarkModeToggle } from "@/components/Commons/darkmodeToggle";
 
 export const metadata: Metadata = {
   title: "Checklist ✅",
@@ -37,9 +38,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <Providers>
         <body className={cn(`min-h-screen bg-background ${gilroy.className}`)}>
+          <DarkModeToggle />
           {children}
           <Toaster />
         </body>
