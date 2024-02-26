@@ -1,5 +1,5 @@
 "use client"
-import { Task } from '@/service/tasks-services'
+import { CreateTask, Task } from '@/service/tasks-services'
 import { zodResolver } from '@hookform/resolvers/zod'
 import React from 'react'
 import { z } from 'zod'
@@ -13,9 +13,12 @@ import {
 } from "@/components/ui/form"
 import { useForm } from 'react-hook-form'
 import { Input } from '../ui/input'
+import { Button } from '../ui/button'
+import { TaskStatusSelect } from '../Commons/taskStatusSelect'
 
 type Props = {
     task: Task
+    onSubmit: (task: Partial<Task>) => void;
 }
 
 const TaskFormSchema = z.object({
@@ -23,21 +26,24 @@ const TaskFormSchema = z.object({
     description: z.string().optional(),
     status: z.enum(["todo", "in_progress", "done"]),
 })
-const TaskForm = ({ task }: Props) => {
+const TaskForm = ({ task, onSubmit }: Props) => {
     const taskForm = useForm<z.infer<typeof TaskFormSchema>>({
         resolver: zodResolver(TaskFormSchema),
         defaultValues: {
             title: task.title,
-            description: task.description,
+            description: task?.description || "",
             status: task.status
         }
     })
 
-    const onSubmit = () => { }
+    const handleSubmit = (data: z.infer<typeof TaskFormSchema>) => {
+        const updatedTask = { ...task, ...data }
+        onSubmit(updatedTask)
+    }
 
     return (
         <Form {...taskForm}>
-            <form onSubmit={taskForm.handleSubmit(onSubmit)} className="space-y-2">
+            <form onSubmit={taskForm.handleSubmit(handleSubmit)} className="space-y-2 flex flex-col mx-2">
                 <FormField
                     control={taskForm.control}
                     name="title"
@@ -51,6 +57,33 @@ const TaskForm = ({ task }: Props) => {
                         </FormItem>
                     )}
                 />
+                <FormField
+                    control={taskForm.control}
+                    name="description"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Description</FormLabel>
+                            <FormControl aria-required={false}>
+                                <Input type="text" placeholder="task description" {...field} required={false} />
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+                <FormField
+                    control={taskForm.control}
+                    name="status"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Status</FormLabel>
+                            <FormControl>
+                                <TaskStatusSelect />
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+                <Button type='submit' onSubmit={() => handleSubmit(task)}>Submit</Button>
             </form>
         </Form>
     )

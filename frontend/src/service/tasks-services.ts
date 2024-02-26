@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import axiosInstance from ".";
 import { PageResponse } from "./commons";
 
@@ -24,4 +24,34 @@ export const useUserTasks = () =>
     useQuery({
         queryKey: ["tasks"],
         queryFn: getTasks
+    });
+
+export type CreateTask = {
+    title: string;
+    description?: string;
+    status?: TaskStatus;
+    start?: string;
+    due?: string;
+};
+
+const addTasks = async (task: CreateTask) => {
+    const { data } = await axiosInstance.post("/tasks", task);
+    return data;
+};
+
+export const useAddTasks = () =>
+    useMutation({
+        mutationKey: ["addTasks"],
+        mutationFn: addTasks
+    });
+
+const updateTask = async (task: Partial<Task>) => {
+    const { data } = await axiosInstance.put(`/tasks/${task.id}`, task);
+    return data;
+};
+
+export const useUpdateTask = () =>
+    useMutation({
+        mutationKey: ["updateTask"],
+        mutationFn: updateTask
     });

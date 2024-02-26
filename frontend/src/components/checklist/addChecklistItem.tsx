@@ -19,7 +19,7 @@ type Props = {
     task: Task
 }
 
-const ChecklistItem = ({ task }: Props) => {
+const AddChecklistItem = ({ task }: Props) => {
     const queryClient = useQueryClient()
     const updateTaskMutation = useUpdateTask()
 
@@ -66,4 +66,4 @@ const ChecklistItem = ({ task }: Props) => {
     )
 }
 
-export default ChecklistItem
+export default AddChecklistItem
