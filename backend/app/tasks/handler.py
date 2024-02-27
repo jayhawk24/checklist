@@ -3,15 +3,18 @@ from users.models import Users
 from auth.tokens import get_current_user
 from tasks.models import Tasks
 from db.database import get_db
+from sqlalchemy import select
 from sqlalchemy.orm import Session
 from tasks.schemas import (
     AddTaskRequestSchema,
     TasksResponseSchema,
     UpdateTaskRequestSchema,
+    TaskFilters,
 )
 
 from fastapi_pagination.ext.sqlalchemy import paginate
 
+from fastapi_filter import FilterDepends
 from fastapi_pagination import Page, add_pagination
 
 tasks_router = APIRouter(prefix="/tasks", tags=["Tasks"])
@@ -19,20 +22,20 @@ tasks_router = APIRouter(prefix="/tasks", tags=["Tasks"])
 
 @tasks_router.get("/")
 def get_tasks(
-    user: Users = Depends(get_current_user), db: Session = Depends(get_db)
+    user: Users = Depends(get_current_user),
+    task_filters: TaskFilters = FilterDepends(TaskFilters),
+    db: Session = Depends(get_db),
 ) -> Page[TasksResponseSchema]:
-    tasks = (
-        db.query(Tasks)
-        .filter(Tasks.user_id == user.id)
-        .order_by(Tasks.created_at.desc())
-    )
+    query = task_filters.filter(select(Tasks))
+
+    tasks = query.filter(Tasks.user_id == user.id).order_by(Tasks.created_at.desc())
 
     return paginate(db, tasks)
 
 
 @tasks_router.get("/{id}")
 def get_task(
-    id: int,
+    id: str,
     user: Users = Depends(get_current_user),
     db: Session = Depends(get_db),
 ):
@@ -56,7 +59,7 @@ def create_task(
 
 @tasks_router.delete("/{id}")
 def delete_task(
-    id: int,
+    id: str,
     user: Users = Depends(get_current_user),
     db: Session = Depends(get_db),
 ):
