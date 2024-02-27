@@ -1,5 +1,5 @@
 "use client"
-import { CreateTask, Task } from '@/service/tasks-services'
+import { Task, TaskStatus } from '@/service/tasks-services'
 import { zodResolver } from '@hookform/resolvers/zod'
 import React from 'react'
 import { z } from 'zod'
@@ -24,7 +24,7 @@ type Props = {
 const TaskFormSchema = z.object({
     title: z.string().min(1, "Title is required"),
     description: z.string().optional(),
-    status: z.enum(["todo", "in_progress", "done"]),
+    status: z.nativeEnum(TaskStatus),
 })
 const TaskForm = ({ task, onSubmit }: Props) => {
     const taskForm = useForm<z.infer<typeof TaskFormSchema>>({
@@ -43,7 +43,7 @@ const TaskForm = ({ task, onSubmit }: Props) => {
 
     return (
         <Form {...taskForm}>
-            <form onSubmit={taskForm.handleSubmit(handleSubmit)} className="space-y-2 flex flex-col mx-2">
+            <form onSubmit={taskForm.handleSubmit(handleSubmit)} className="space-y-2 flex flex-col mx-4 ">
                 <FormField
                     control={taskForm.control}
                     name="title"
@@ -77,7 +77,7 @@ const TaskForm = ({ task, onSubmit }: Props) => {
                         <FormItem>
                             <FormLabel>Status</FormLabel>
                             <FormControl>
-                                <TaskStatusSelect />
+                                <TaskStatusSelect value={field.value} onChange={field.onChange} />
                             </FormControl>
                             <FormMessage />
                         </FormItem>

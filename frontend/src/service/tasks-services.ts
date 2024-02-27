@@ -2,7 +2,11 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import axiosInstance from ".";
 import { PageResponse } from "./commons";
 
-export type TaskStatus = "todo" | "in_progress" | "done";
+export enum TaskStatus {
+    "todo" = "todo",
+    "in_progress" = "in_progress",
+    "done" = "done"
+}
 
 export type Task = {
     id: string;
@@ -26,15 +30,7 @@ export const useUserTasks = () =>
         queryFn: getTasks
     });
 
-export type CreateTask = {
-    title: string;
-    description?: string;
-    status?: TaskStatus;
-    start?: string;
-    due?: string;
-};
-
-const addTasks = async (task: CreateTask) => {
+const addTasks = async (task: Partial<Task>) => {
     const { data } = await axiosInstance.post("/tasks", task);
     return data;
 };
