@@ -10,6 +10,7 @@ ecdsa==0.18.0
 email-validator==2.1.0.post1
 exceptiongroup==1.2.0
 fastapi==0.109.1
+fastapi-filter==1.1.0
 fastapi-pagination==0.12.17
 greenlet==3.0.3
 h11==0.14.0
