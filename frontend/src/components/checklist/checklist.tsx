@@ -62,13 +62,13 @@ const Checklist = ({ tasks }: Props) => {
         <Drawer>
             <DrawerTrigger>
                 <div className='border border-white rounded-lg p-4 m-2 relative'>
-                    <p className='text-slate-400'>add a new task</p>
+                    <p className='text-slate-400'>Add a new task</p>
                 </div>
             </DrawerTrigger>
 
             <DrawerContent>
                 <DrawerHeader>
-                    <DrawerTitle>add task</DrawerTitle>
+                    <DrawerTitle>Add Task</DrawerTitle>
                 </DrawerHeader>
                 <div>
                     <TaskForm task={emptyTask} onSubmit={addTask} />

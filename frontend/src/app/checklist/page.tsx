@@ -21,8 +21,6 @@ const TasksPage = () => {
 
     return (
         <>
-            <div>Checklist</div>
-            <div>Welcome {userProfile.data?.name}</div>
             <Checklist tasks={userTasks?.data?.items} />
         </>
     )
