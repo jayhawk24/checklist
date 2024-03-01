@@ -15,7 +15,7 @@ import TaskForm from '../forms/taskForm';
 import { Button } from '../ui/button';
 import toast from 'react-hot-toast';
 import { useQueryClient } from '@tanstack/react-query';
-import { TaskStatusMultiSelect } from '../Commons/taskStatusSelect';
+import { TaskStatusMultiSelect } from '../commons/taskStatusSelect';
 
 type Props = {
     tasks: Task[] | undefined

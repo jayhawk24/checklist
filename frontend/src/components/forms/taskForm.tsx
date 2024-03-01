@@ -14,7 +14,7 @@ import {
 import { useForm } from 'react-hook-form'
 import { Input } from '../ui/input'
 import { Button } from '../ui/button'
-import { TaskStatusSelect } from '../Commons/taskStatusSelect'
+import { TaskStatusSelect } from '../commons/taskStatusSelect'
 
 type Props = {
     task: Task

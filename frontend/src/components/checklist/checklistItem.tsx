@@ -1,4 +1,4 @@
-import { Task, useUpdateTask } from '@/service/tasks-services'
+import { Task, useDeleteTask, useUpdateTask } from '@/service/tasks-services'
 import React from 'react'
 import {
     Drawer,
@@ -24,12 +24,27 @@ type Props = {
 const ChecklistItem = ({ task }: Props) => {
     const queryClient = useQueryClient()
     const updateTaskMutation = useUpdateTask()
+    const deleteTaskMutation = useDeleteTask()
 
     const handleSubmit = (task: Partial<Task>) => {
         toast.promise(updateTaskMutation.mutateAsync(task), {
             loading: "Updating task...",
             error: "Error updating task.",
             success: "Task updated successfully.",
+        })
+            .then(
+                () => queryClient.invalidateQueries(
+                    {
+                        queryKey: ["tasks"],
+                    }
+                )
+            )
+    }
+    const handleDelete = (task: Task) => {
+        toast.promise(deleteTaskMutation.mutateAsync(task.id), {
+            loading: "Deleting task...",
+            error: "Error deleting task.",
+            success: "Task deleted successfully.",
         })
             .then(
                 () => queryClient.invalidateQueries(
@@ -53,7 +68,7 @@ const ChecklistItem = ({ task }: Props) => {
                             <Badge variant={'outline'} className={getTaskStatusAndColor(task.status)[1]}>
                                 {getTaskStatusAndColor(task.status)[0]}
                             </Badge>
-                            <Badge variant={'destructive'} className='h-10 w-10' >
+                            <Badge variant={'destructive'} className='h-10 w-10 z-10' onClick={() => handleDelete(task)} >
                                 <Trash2Icon />
                             </Badge>
                         </div>

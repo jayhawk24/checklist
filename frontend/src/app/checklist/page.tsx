@@ -1,5 +1,5 @@
 "use client"
-import LoadingSpinner from '@/components/Commons/loadingSpinner'
+import LoadingSpinner from '@/components/commons/loadingSpinner'
 import Checklist from '@/components/checklist/checklist'
 import { useUserProfile } from '@/service/profile-service'
 import { useUserTasks } from '@/service/tasks-services'

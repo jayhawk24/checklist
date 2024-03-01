@@ -4,7 +4,7 @@ import Providers from "@/components/providers";
 import localFont from 'next/font/local';
 import { Toaster } from "react-hot-toast";
 import { cn } from "@/lib/utils";
-import { DarkModeToggle } from "@/components/Commons/darkmodeToggle";
+import { DarkModeToggle } from "@/components/commons/darkmodeToggle";
 
 export const metadata: Metadata = {
   title: "Checklist ✅",
