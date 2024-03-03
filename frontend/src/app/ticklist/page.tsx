@@ -1,6 +1,6 @@
 "use client"
 import LoadingSpinner from '@/components/commons/loadingSpinner'
-import Checklist from '@/components/checklist/checklist'
+import Ticklist from '@/components/ticklist/ticklist'
 import { useUserProfile } from '@/service/profile-service'
 import { useUserTasks } from '@/service/tasks-services'
 import { useRouter } from 'next/navigation'
@@ -21,7 +21,7 @@ const TasksPage = () => {
 
     return (
         <>
-            <Checklist tasks={userTasks?.data?.items} />
+            <Ticklist tasks={userTasks?.data?.items} />
         </>
     )
 }

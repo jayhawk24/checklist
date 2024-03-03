@@ -4,7 +4,6 @@ import {
     Drawer,
     DrawerClose,
     DrawerContent,
-    DrawerDescription,
     DrawerFooter,
     DrawerHeader,
     DrawerTitle,
@@ -19,7 +18,7 @@ type Props = {
     task: Task
 }
 
-const AddChecklistItem = ({ task }: Props) => {
+const AddTicklistItem = ({ task }: Props) => {
     const queryClient = useQueryClient()
     const updateTaskMutation = useUpdateTask()
 
@@ -66,4 +65,4 @@ const AddChecklistItem = ({ task }: Props) => {
     )
 }
 
-export default AddChecklistItem
+export default AddTicklistItem

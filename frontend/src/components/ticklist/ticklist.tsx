@@ -1,7 +1,7 @@
 "use client"
 import React from 'react'
 import { Task, TaskStatus, useAddTasks } from "@/service/tasks-services"
-import ChecklistItem from './checklistItem';
+import ChecklistItem from './ticklistItem';
 import {
     Drawer,
     DrawerClose,
@@ -23,7 +23,7 @@ type Props = {
 
 
 
-const Checklist = ({ tasks }: Props) => {
+const Ticklist = ({ tasks }: Props) => {
     const addTaskMutation = useAddTasks()
     const queryClient = useQueryClient()
     const [values, setValues] = React.useState<TaskStatus[]>([TaskStatus.todo])
@@ -83,4 +83,4 @@ const Checklist = ({ tasks }: Props) => {
     </div>
 }
 
-export default Checklist
+export default Ticklist

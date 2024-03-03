@@ -22,13 +22,6 @@ const navLinks = [
 
     },
     {
-        title: "Logout",
-        link: "/logout",
-        auth: true,
-        icon: <LogOutIcon />
-
-    },
-    {
         title: "Profile",
         link: "/profile",
         auth: true,
@@ -40,6 +33,13 @@ const navLinks = [
         link: "/planning",
         auth: true,
         icon: <NotebookPenIcon />
+
+    },
+    {
+        title: "Logout",
+        link: "/logout",
+        auth: true,
+        icon: <LogOutIcon />
 
     },
 ]
