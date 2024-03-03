@@ -1,102 +1,17 @@
 "use client"
-import { FingerprintIcon, LayoutDashboardIcon, LogOutIcon, MenuIcon, NotebookPenIcon, User2Icon, UserRoundMinusIcon } from "lucide-react"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
-import Link from "next/link"
-import { useUserProfile } from "@/service/profile-service"
-import { useEffect, useMemo, useState } from "react"
-import { DarkModeToggle } from "./darkmodeToggle"
-import { usePathname } from "next/navigation"
+import { MenuIcon } from "lucide-react"
+import SidebarContent from "./sidebarContent"
 
-export type NavLink = {
-    title: string
-    link: string
-    auth: boolean
-    icon: JSX.Element
-    isActive?: boolean
-}
 
-const navLinks: NavLink[] = [
-    {
-        title: "Dashboard",
-        link: "/ticklist",
-        auth: true,
-        icon: <LayoutDashboardIcon />
-
-    },
-    {
-        title: "Login",
-        link: "/login",
-        auth: false,
-        icon: <FingerprintIcon />
-
-    },
-    {
-        title: "Profile",
-        link: "/profile",
-        auth: true,
-        icon: <User2Icon />
-
-    },
-    {
-        title: "Planning",
-        link: "/planning",
-        auth: true,
-        icon: <NotebookPenIcon />
-
-    },
-    {
-        title: "Logout",
-        link: "/logout",
-        auth: true,
-        icon: <LogOutIcon />
-
-    },
-]
-
-const MobileDashboardHeader = () => {
+export const MobileDashboardHeader = () => {
     return (
         <div className="flex px-4">
-            <span className="text-2xl font-extrabold">TickList</span>
+            <span className="text-2xl font-extrabold">✅ TickList</span>
         </div>
     )
 }
-const SidebarContent = () => {
-    const user = useUserProfile()
-    const pathname = usePathname()
 
-    const setActiveLink = (navLink: NavLink) => {
-        const isActive = pathname === navLink.link
-        navLink.isActive = isActive
-        return navLink
-    }
-
-    const activeLinks = useMemo(() => navLinks.map(navLink => setActiveLink(navLink)), [navLinks])
-    const [links, setLinks] = useState(activeLinks)
-
-    useEffect(() => {
-        if (user.data?.id) {
-            setLinks(navLinks.filter(navLink => navLink.auth))
-        }
-        else {
-            setLinks(navLinks.filter(navLink => !navLink.auth))
-        }
-    }, [user.data])
-
-    return (
-        <div>
-            <MobileDashboardHeader />
-            <DarkModeToggle />
-            <div className="mt-6 space-y-4">
-                {links.map((navItem) => (
-                    <Link href={navItem.link} key={navItem.link} className={`flex items-center rounded-lg px-4 py-2.5 transition duration-200 hover:bg-cyan-900 ${navItem.isActive ? 'bg-cyan-900' : ""}`}>
-                        {navItem.icon}
-                        <span className="ml-3">{navItem.title}</span>
-                    </Link>))
-                }
-            </div>
-        </div>
-    )
-}
 
 export const WithMobileSidebar = ({
     children,
