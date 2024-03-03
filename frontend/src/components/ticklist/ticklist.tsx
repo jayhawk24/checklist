@@ -26,7 +26,7 @@ type Props = {
 const Ticklist = ({ tasks }: Props) => {
     const addTaskMutation = useAddTasks()
     const queryClient = useQueryClient()
-    const [values, setValues] = React.useState<TaskStatus[]>([TaskStatus.todo])
+    const [values, setValues] = React.useState<TaskStatus[]>([TaskStatus.todo, TaskStatus.done, TaskStatus.in_progress])
     let emptyTask: Task = {
         id: "",
         title: "",

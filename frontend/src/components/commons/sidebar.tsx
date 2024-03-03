@@ -3,10 +3,19 @@ import { FingerprintIcon, LayoutDashboardIcon, LogOutIcon, MenuIcon, NotebookPen
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import Link from "next/link"
 import { useUserProfile } from "@/service/profile-service"
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { DarkModeToggle } from "./darkmodeToggle"
+import { usePathname } from "next/navigation"
 
-const navLinks = [
+export type NavLink = {
+    title: string
+    link: string
+    auth: boolean
+    icon: JSX.Element
+    isActive?: boolean
+}
+
+const navLinks: NavLink[] = [
     {
         title: "Dashboard",
         link: "/ticklist",
@@ -53,7 +62,16 @@ const MobileDashboardHeader = () => {
 }
 const SidebarContent = () => {
     const user = useUserProfile()
-    const [links, setLinks] = useState(navLinks)
+    const pathname = usePathname()
+
+    const setActiveLink = (navLink: NavLink) => {
+        const isActive = pathname === navLink.link
+        navLink.isActive = isActive
+        return navLink
+    }
+
+    const activeLinks = useMemo(() => navLinks.map(navLink => setActiveLink(navLink)), [navLinks])
+    const [links, setLinks] = useState(activeLinks)
 
     useEffect(() => {
         if (user.data?.id) {
@@ -68,14 +86,13 @@ const SidebarContent = () => {
         <div>
             <MobileDashboardHeader />
             <DarkModeToggle />
-            <div className="mt-6">
+            <div className="mt-6 space-y-4">
                 {links.map((navItem) => (
-                    <Link href={navItem.link} key={navItem.link} className="flex items-center rounded-lg px-4 py-2.5 transition duration-200 hover:bg-cyan-900">
+                    <Link href={navItem.link} key={navItem.link} className={`flex items-center rounded-lg px-4 py-2.5 transition duration-200 hover:bg-cyan-900 ${navItem.isActive ? 'bg-cyan-900' : ""}`}>
                         {navItem.icon}
                         <span className="ml-3">{navItem.title}</span>
                     </Link>))
                 }
-
             </div>
         </div>
     )
