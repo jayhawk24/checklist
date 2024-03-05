@@ -39,15 +39,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <Providers>
-        <body className={cn(`min-h-screen bg-background ${gilroy.className}`)}>
+      <body className={cn(`min-h-screen bg-background ${gilroy.className}`)}>
+        <Providers>
           <Sidebar
           >
             {children}
           </Sidebar>
           <Toaster position="bottom-right" />
-        </body>
-      </Providers>
+        </Providers>
+      </body>
     </html>
   );
 }
