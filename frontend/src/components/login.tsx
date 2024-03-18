@@ -10,7 +10,7 @@ export default function Login() {
     const userProfile = useUserProfile()
 
     if (userProfile.data) {
-        router.push("/checklist")
+        router.push("/ticklist")
     }
 
     const signinMutation = useSigninMutation()
@@ -21,7 +21,7 @@ export default function Login() {
             loading: "Logging in...",
             success: "Login successful.",
             error: "Invalid email or password."
-        }).then(() => router.push("/checklist"))
+        }).then(() => router.push("/ticklist"))
 
     }
 

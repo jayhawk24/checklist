@@ -4,7 +4,7 @@ import { useUserProfile } from "@/service/profile-service"
 import { useEffect, useMemo, useState } from "react"
 import { DarkModeToggle } from "./darkmodeToggle"
 import { usePathname } from "next/navigation"
-import { FingerprintIcon, LayoutDashboardIcon, LogOutIcon, NotebookPenIcon, User2Icon } from "lucide-react"
+import { FingerprintIcon, KeySquareIcon, LayoutDashboardIcon, LogOutIcon, NotebookPenIcon, User2Icon } from "lucide-react"
 import { MobileDashboardHeader } from "./sidebar"
 
 export type NavLink = {
@@ -25,9 +25,15 @@ const navLinks: NavLink[] = [
     },
     {
         title: "Login",
-        link: "/login",
+        link: "/auth/login",
         auth: false,
         icon: <FingerprintIcon />
+
+    }, {
+        title: "Signup",
+        link: "/auth/signup",
+        auth: false,
+        icon: <KeySquareIcon />
 
     },
     {
@@ -46,7 +52,7 @@ const navLinks: NavLink[] = [
     },
     {
         title: "Logout",
-        link: "/logout",
+        link: "/auth/logout",
         auth: true,
         icon: <LogOutIcon />
 
