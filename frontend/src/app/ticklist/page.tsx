@@ -4,14 +4,15 @@ import Ticklist from '@/components/ticklist/ticklist'
 import { useUserProfile } from '@/service/profile-service'
 import { useUserTasks } from '@/service/tasks-services'
 import Image from 'next/image'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import React from 'react'
 import { Calendar } from "@/components/ui/calendar"
 
 const TasksPage = () => {
     const router = useRouter()
     const userProfile = useUserProfile()
-    const userTasks = useUserTasks()
+    const searchParams = useSearchParams()
+    const userTasks = useUserTasks(searchParams.toString() || "")
     const [date, setDate] = React.useState<Date | undefined>(new Date())
 
     if (userProfile.isError) {

@@ -1,9 +1,12 @@
+"use client"
+
 import {
     ToggleGroup,
     ToggleGroupItem,
 } from "@/components/ui/toggle-group"
 import { getTaskStatusAndColor } from "@/service/commons"
 import { TaskStatus } from "@/service/tasks-services"
+import { useSearchParams, useRouter, usePathname } from "next/navigation"
 
 type Props = {
     value: TaskStatus
@@ -29,8 +32,20 @@ type MutliSelectProps = {
 export function TaskStatusMultiSelect(
     { values, onChange }: MutliSelectProps
 ) {
+
+    const searchParams = useSearchParams()
+    const router = useRouter()
+    const pathname = usePathname();
+
+    const handleChange = (value: TaskStatus[]) => {
+        const params = new URLSearchParams(searchParams)
+        params.set("status__in", values.join(","))
+        router.push(pathname + "?" + params.toString())
+        onChange(value)
+    }
+
     return (
-        <ToggleGroup type="multiple" className="flex justify-start" value={values} onValueChange={onChange}>
+        <ToggleGroup type="multiple" className="flex justify-start" value={values} onValueChange={(value) => handleChange(value as TaskStatus[])}>
             {Object.values(TaskStatus).map(status =>
                 <ToggleGroupItem value={status} key={status} aria-label={`Toggle ${status}`}>
                     {getTaskStatusAndColor(status)[0]}

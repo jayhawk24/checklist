@@ -19,15 +19,17 @@ export type Task = {
     updated_at: string;
 };
 
-const getTasks = async () => {
-    const { data } = await axiosInstance.get<PageResponse<Task>>("/tasks");
+const getTasks = async (query: string) => {
+    const { data } = await axiosInstance.get<PageResponse<Task>>(
+        "/tasks?" + query
+    );
     return data;
 };
 
-export const useUserTasks = () =>
+export const useUserTasks = (params: string) =>
     useQuery({
-        queryKey: ["tasks"],
-        queryFn: getTasks
+        queryKey: ["tasks", params],
+        queryFn: () => getTasks(params)
     });
 
 const addTasks = async (task: Partial<Task>) => {
