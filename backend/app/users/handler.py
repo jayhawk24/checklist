@@ -1,3 +1,4 @@
+import asyncio
 from users.models import Users
 from datetime import timedelta, datetime
 from fastapi import Depends, HTTPException, status, APIRouter, Response, UploadFile
@@ -15,7 +16,7 @@ from auth.utils import verify_password, hash_pass
 from commons.utils import validate_file_size_type
 from auth.tokens import create_access_token, create_refresh_token, get_current_user
 from core.config import FRONTEND_URL, JWT_ACCESS_TOKEN_EXPIRE_MINUTES
-import cloudinary
+from commons.cloudinary import upload_image
 
 user_router = APIRouter(prefix="/users", tags=["Users"])
 
@@ -136,13 +137,19 @@ async def update_profile(
 
 @user_router.put("/me/avatar")
 async def update_avatar(
-    file: UploadFile,
+    image: UploadFile,
     user: Users = Depends(get_current_user),
     db: Session = Depends(get_db),
-) -> UserSchema:
-    validate_file_size_type(file)
+):
+    validate_file_size_type(image)
 
-    uploaded_file = await cloudinary.uploader.upload(file)
-    user.avatar = uploaded_file["url"]
+    url = await upload_image(image)
+    print(url)
 
-    return {"public_url": uploaded_file["url"]}
+    if user.avatar:
+        # delete previous image
+        pass
+
+    user.avatar = url
+
+    return {"url": url}
