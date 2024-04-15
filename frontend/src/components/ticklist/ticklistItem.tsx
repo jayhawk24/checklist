@@ -58,7 +58,7 @@ const ChecklistItem = ({ task }: Props) => {
     return (
         <Drawer>
             <DrawerTrigger>
-                <div className='border border-white rounded-lg p-4 m-2 ml-0 relative'>
+                <div className='border dark:border-white  rounded-lg p-4 m-2 ml-0 relative'>
                     <div className="flex w-full justify-between">
                         <div className='flex flex-col items-start'>
                             <p>{task.title}</p>

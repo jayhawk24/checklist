@@ -55,7 +55,7 @@ const Ticklist = () => {
             <TaskStatusMultiSelect values={values} onChange={setValues} />
         </div>
         {
-            userTasks.isLoading && <div className='flex justify-center items-center '>
+            userTasks.isLoading && <div className='flex justify-center items-center my-10 '>
                 <LoadingSpinner />
                 <p className='ml-2'>
                     Loading tasks...

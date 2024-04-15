@@ -24,7 +24,7 @@ const TasksPage = () => {
             <h1 className='text-5xl'>
                 My tasks
             </h1>
-            <div className='flex flex-col w-2/3 space-y-10'>
+            <div className='flex flex-col sm:w-2/3 space-y-10'>
                 {/* <div className="flex max-w-full max-h-full justify-around">
                     <Image src="/images/undraw_completed_tasks_vs6q.svg" alt='tasks image' height={150} width={300} />
                     <Calendar
