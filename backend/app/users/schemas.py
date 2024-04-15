@@ -1,4 +1,12 @@
+from typing import Optional
 from pydantic import BaseModel, constr, EmailStr, ConfigDict
+
+
+class UpdateProfileRequestSchema(BaseModel):
+    name: Optional[str]
+    email: Optional[EmailStr]
+    password: Optional[constr(min_length=8, max_length=50)]
+    old_password: Optional[constr(min_length=8, max_length=50)]
 
 
 class UserSchema(BaseModel):
@@ -7,6 +15,7 @@ class UserSchema(BaseModel):
     id: str
     name: str
     email: str
+    avatar: Optional[str] = None
     is_active: bool
 
 
