@@ -8,6 +8,7 @@ import { getTaskStatusAndColor } from "@/service/commons"
 import { TaskStatus } from "@/service/tasks-services"
 import { useSearchParams, useRouter, usePathname } from "next/navigation"
 import { useEffect } from "react"
+import { Suspense } from "react"
 
 type Props = {
     value: TaskStatus
@@ -53,12 +54,14 @@ export function TaskStatusMultiSelect(
     }, [])
 
     return (
-        <ToggleGroup type="multiple" className="flex justify-start" value={values} onValueChange={(value) => handleChange(value as TaskStatus[])}>
-            {Object.values(TaskStatus).map(status =>
-                <ToggleGroupItem value={status} key={status} aria-label={`Toggle ${status}`}>
-                    {getTaskStatusAndColor(status)[0]}
-                </ToggleGroupItem>
-            )}
-        </ToggleGroup>
+        <Suspense>
+            <ToggleGroup type="multiple" className="flex justify-start" value={values} onValueChange={(value) => handleChange(value as TaskStatus[])}>
+                {Object.values(TaskStatus).map(status =>
+                    <ToggleGroupItem value={status} key={status} aria-label={`Toggle ${status}`}>
+                        {getTaskStatusAndColor(status)[0]}
+                    </ToggleGroupItem>
+                )}
+            </ToggleGroup>
+        </Suspense>
     )
 }
