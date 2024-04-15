@@ -44,15 +44,19 @@ const LoginForm = (props: LoginFormProps) => {
 
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
                 <FormField
                     control={form.control}
                     name="email"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>email</FormLabel>
+                            <FormLabel>
+                                <p className="text-lg">
+                                    email
+                                </p>
+                            </FormLabel>
                             <FormControl>
-                                <Input type="email" placeholder="enter your email" {...field} />
+                                <Input type="email" placeholder="enter your email" {...field} className="text-lg" />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -63,15 +67,19 @@ const LoginForm = (props: LoginFormProps) => {
                     name="password"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>password</FormLabel>
+                            <FormLabel>
+                                <p className="text-lg">
+                                    password
+                                </p>
+                            </FormLabel>
                             <FormControl>
-                                <Input type="password" placeholder="enter your password" {...field} />
+                                <Input type="password" placeholder="enter your password" {...field} className="text-lg" />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
                     )}
                 />
-                <Button type="submit">submit</Button>
+                <Button type="submit" className="text-lg" >submit</Button>
             </form>
         </Form>
     )

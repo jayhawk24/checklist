@@ -25,7 +25,7 @@ export default function Login() {
 
     }
 
-    return <div className='flex flex-col justify-between h-full'>
+    return <div className='min-h-screen w-full grid place-items-center'>
         <LoginForm onSubmit={handleSubmit} />
     </div>
 
