@@ -2,8 +2,7 @@
 import LoadingSpinner from '@/components/commons/loadingSpinner'
 import Ticklist from '@/components/ticklist/ticklist'
 import { useUserProfile } from '@/service/profile-service'
-import { useUserTasks } from '@/service/tasks-services'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import React, { Suspense } from 'react'
 
 const TasksPage = () => {

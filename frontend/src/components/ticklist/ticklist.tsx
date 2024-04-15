@@ -17,6 +17,7 @@ import toast from 'react-hot-toast';
 import { useQueryClient } from '@tanstack/react-query';
 import { TaskStatusMultiSelect } from '../commons/taskStatusSelect';
 import { useSearchParams } from 'next/navigation';
+import LoadingSpinner from '../commons/loadingSpinner';
 
 
 
@@ -53,6 +54,14 @@ const Ticklist = () => {
         <div className="flex mb-3">
             <TaskStatusMultiSelect values={values} onChange={setValues} />
         </div>
+        {
+            userTasks.isLoading && <div className='flex justify-center items-center '>
+                <LoadingSpinner />
+                <p className='ml-2'>
+                    Loading tasks...
+                </p>
+            </div>
+        }
         {
             userTasks.data?.items?.map(
                 (task) => (
