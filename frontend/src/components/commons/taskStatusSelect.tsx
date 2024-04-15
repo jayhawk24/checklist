@@ -39,9 +39,11 @@ export function TaskStatusMultiSelect(
     const pathname = usePathname();
 
     const handleChange = (value: TaskStatus[]) => {
-        console.log("here", value)
         const params = new URLSearchParams(searchParams)
         params.set("status__in", value.join(","))
+        if (value.length === 0) {
+            params.delete("status__in")
+        }
         router.push(pathname + "?" + params.toString())
         onChange(value)
     }
