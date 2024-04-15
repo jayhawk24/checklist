@@ -43,13 +43,12 @@ const navLinks: NavLink[] = [
         icon: <User2Icon />
 
     },
-    {
-        title: "Planning",
-        link: "/planning",
-        auth: true,
-        icon: <NotebookPenIcon />
-
-    },
+    // {
+    //     title: "Planning",
+    //     link: "/planning",
+    //     auth: true,
+    //     icon: <NotebookPenIcon />
+    // },
     {
         title: "Logout",
         link: "/auth/logout",

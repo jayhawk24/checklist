@@ -1,5 +1,5 @@
 "use client"
-import React, { Suspense, useEffect } from 'react'
+import React, { Suspense, useEffect, useState } from 'react'
 import { Task, TaskStatus, useAddTasks, useUserTasks } from "@/service/tasks-services"
 import ChecklistItem from './ticklistItem';
 import {
@@ -18,11 +18,14 @@ import { useQueryClient } from '@tanstack/react-query';
 import { TaskStatusMultiSelect } from '../commons/taskStatusSelect';
 import { useSearchParams } from 'next/navigation';
 import LoadingSpinner from '../commons/loadingSpinner';
+import { DatePicker } from '../commons/datePicker';
 
 
 
 
 const Ticklist = () => {
+    const [date, setDate] = React.useState<Date>()
+
     const searchParams = useSearchParams()
     const userTasks = useUserTasks(searchParams.toString() || "")
 
@@ -51,8 +54,9 @@ const Ticklist = () => {
 
 
     return <div className='flex flex-col'>
-        <div className="flex mb-3">
+        <div className="flex mb-3 flex-wrap justify-between gap-y-2">
             <TaskStatusMultiSelect values={values} onChange={setValues} />
+            <DatePicker date={date} setDate={setDate} label="Pick a date" />
         </div>
         {
             userTasks.isLoading && <div className='flex justify-center items-center my-10 '>

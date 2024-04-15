@@ -9,8 +9,6 @@ const TasksPage = () => {
     const router = useRouter()
     const userProfile = useUserProfile()
 
-    // const [date, setDate] = React.useState<Date | undefined>(new Date())
-
     if (userProfile.isError) {
         router.push('/login')
     }
