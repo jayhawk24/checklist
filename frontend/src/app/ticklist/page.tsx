@@ -4,13 +4,12 @@ import Ticklist from '@/components/ticklist/ticklist'
 import { useUserProfile } from '@/service/profile-service'
 import { useUserTasks } from '@/service/tasks-services'
 import { useRouter, useSearchParams } from 'next/navigation'
-import React from 'react'
+import React, { Suspense } from 'react'
 
 const TasksPage = () => {
     const router = useRouter()
     const userProfile = useUserProfile()
-    const searchParams = useSearchParams()
-    const userTasks = useUserTasks(searchParams.toString() || "")
+
     // const [date, setDate] = React.useState<Date | undefined>(new Date())
 
     if (userProfile.isError) {
@@ -36,7 +35,9 @@ const TasksPage = () => {
                         className="rounded-lg border"
                     />
                 </div> */}
-                <Ticklist tasks={userTasks?.data?.items} />
+                <Suspense>
+                    <Ticklist />
+                </Suspense>
             </div>
         </main >
     )

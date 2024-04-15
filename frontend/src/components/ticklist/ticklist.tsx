@@ -1,6 +1,6 @@
 "use client"
-import React, { useEffect } from 'react'
-import { Task, TaskStatus, useAddTasks } from "@/service/tasks-services"
+import React, { Suspense, useEffect } from 'react'
+import { Task, TaskStatus, useAddTasks, useUserTasks } from "@/service/tasks-services"
 import ChecklistItem from './ticklistItem';
 import {
     Drawer,
@@ -16,14 +16,15 @@ import { Button } from '../ui/button';
 import toast from 'react-hot-toast';
 import { useQueryClient } from '@tanstack/react-query';
 import { TaskStatusMultiSelect } from '../commons/taskStatusSelect';
-
-type Props = {
-    tasks: Task[] | undefined
-}
+import { useSearchParams } from 'next/navigation';
 
 
 
-const Ticklist = ({ tasks }: Props) => {
+
+const Ticklist = () => {
+    const searchParams = useSearchParams()
+    const userTasks = useUserTasks(searchParams.toString() || "")
+
     const addTaskMutation = useAddTasks()
     const queryClient = useQueryClient()
     const [values, setValues] = React.useState<TaskStatus[]>([TaskStatus.todo, TaskStatus.done, TaskStatus.in_progress])
@@ -53,7 +54,7 @@ const Ticklist = ({ tasks }: Props) => {
             <TaskStatusMultiSelect values={values} onChange={setValues} />
         </div>
         {
-            tasks?.map(
+            userTasks.data?.items?.map(
                 (task) => (
                     <ChecklistItem task={task} key={task.id} />
                 )
