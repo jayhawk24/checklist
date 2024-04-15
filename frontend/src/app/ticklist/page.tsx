@@ -24,12 +24,12 @@ const TasksPage = () => {
     }
 
     return (
-        <main className='mt-7 space-y-5 justify-center flex'>
+        <main className='mt-7 space-y-10 justify-center flex-col'>
             <h1 className='text-5xl'>
                 My tasks
             </h1>
-            <div className='flex flex-col w-2/3'>
-                <div className="flex max-w-full max-h-full justify-around">
+            <div className='flex flex-col w-2/3 space-y-10'>
+                {/* <div className="flex max-w-full max-h-full justify-around">
                     <Image src="/images/undraw_completed_tasks_vs6q.svg" alt='tasks image' height={150} width={300} />
                     <Calendar
                         mode="single"
@@ -37,7 +37,7 @@ const TasksPage = () => {
                         onSelect={setDate}
                         className="rounded-lg border"
                     />
-                </div>
+                </div> */}
                 <Ticklist tasks={userTasks?.data?.items} />
             </div>
         </main >

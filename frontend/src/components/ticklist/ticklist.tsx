@@ -49,7 +49,7 @@ const Ticklist = ({ tasks }: Props) => {
 
 
     return <div className='flex flex-col'>
-        <div className="flex">
+        <div className="flex mb-3">
             <TaskStatusMultiSelect values={values} onChange={setValues} />
         </div>
         {
@@ -61,7 +61,7 @@ const Ticklist = ({ tasks }: Props) => {
         }
         <Drawer>
             <DrawerTrigger>
-                <div className='border border-white rounded-lg p-4 m-2 relative'>
+                <div className='border border-white rounded-lg p-4 m-2 ml-0 relative'>
                     <p className='text-slate-400'>Add a new task</p>
                 </div>
             </DrawerTrigger>

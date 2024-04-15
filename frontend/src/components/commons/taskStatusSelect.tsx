@@ -7,6 +7,7 @@ import {
 import { getTaskStatusAndColor } from "@/service/commons"
 import { TaskStatus } from "@/service/tasks-services"
 import { useSearchParams, useRouter, usePathname } from "next/navigation"
+import { useEffect } from "react"
 
 type Props = {
     value: TaskStatus
@@ -38,11 +39,16 @@ export function TaskStatusMultiSelect(
     const pathname = usePathname();
 
     const handleChange = (value: TaskStatus[]) => {
+        console.log("here", value)
         const params = new URLSearchParams(searchParams)
-        params.set("status__in", values.join(","))
+        params.set("status__in", value.join(","))
         router.push(pathname + "?" + params.toString())
         onChange(value)
     }
+
+    useEffect(() => {
+        handleChange(values)
+    }, [])
 
     return (
         <ToggleGroup type="multiple" className="flex justify-start" value={values} onValueChange={(value) => handleChange(value as TaskStatus[])}>
