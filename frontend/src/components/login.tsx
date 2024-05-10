@@ -25,8 +25,6 @@ export default function Login() {
 
     }
 
-    return <div className='min-h-screen w-full grid place-items-center'>
-        <LoginForm onSubmit={handleSubmit} />
-    </div>
+    return <LoginForm onSubmit={handleSubmit} />
 
 }

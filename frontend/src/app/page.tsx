@@ -3,44 +3,54 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
 } from "@/components/ui/carousel"
+import { Button } from "@/components/ui/button";
+import { ChevronRight } from "lucide-react";
 
 export default function Home() {
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="flex">
-
+    <main className="flex min-h-screen flex-col items-center justify-between md:p-24 p-5">
+      <div className="flex flex-col gap-10">
+        <div>
+          <h1 className="text-5xl capitalize leading-normal">
+            Effortlessly organize your life,<br /> one task at a time.
+          </h1>
+        </div>
         <Carousel
           opts={{
             align: "start", loop: true
           }}
-          className="h-100 w-100"
         >
           <CarouselContent
           >
-            <CarouselItem>
-              <Image src="/images/task5.svg" alt="Tasks" width={800} height={800} />
+            <CarouselItem className="flex justify-center items-center" >
+              <Image src="/images/task5.svg" alt="Tasks" width={500} height={500} />
             </CarouselItem>
-            <CarouselItem>
-              <Image src="/images/task3.svg" alt="Tasks" width={800} height={800} />
+            <CarouselItem className="flex justify-center items-center">
+              <Image src="/images/task3.svg" alt="Tasks" width={500} height={500} />
             </CarouselItem>
-            <CarouselItem>
-              <Image src="/images/task4.svg" alt="Tasks" width={800} height={800} />
+            <CarouselItem className="flex justify-center items-center">
+              <Image src="/images/task4.svg" alt="Tasks" width={500} height={500} />
             </CarouselItem>
-            <CarouselItem>
-              <Image src="/images/task6.svg" alt="Tasks" width={800} height={800} />
-            </CarouselItem><CarouselItem>
-              <Image src="/images/task7.svg" alt="Tasks" width={800} height={800} />
+            <CarouselItem className="flex justify-center items-center">
+              <Image src="/images/task6.svg" alt="Tasks" width={500} height={500} />
+            </CarouselItem><CarouselItem className="flex justify-center items-center">
+              <Image src="/images/task7.svg" alt="Tasks" width={500} height={500} />
             </CarouselItem>
-            <CarouselItem>
-              <Image src="/images/task2.svg" alt="Tasks" height={500} width={500} />
+            <CarouselItem className="flex justify-center items-center">
+              <Image src="/images/task2.svg" alt="Tasks" width={500} height={500} />
             </CarouselItem>
           </CarouselContent>
         </Carousel>
-
+        <div className="flex gap-20 items-center">
+          <p className="text-lg">
+            Experience the power of effortless organization and start conquering your to-do list today. Sign up for ticklist and take the first step towards a more organized, productive, and fulfilling life.
+          </p>
+          <Button className="text-xl font-bold text-primary-foreground">
+            LOGIN <ChevronRight />
+          </Button>
+        </div>
       </div>
     </main>
   );

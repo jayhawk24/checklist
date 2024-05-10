@@ -51,12 +51,12 @@ const LoginForm = (props: LoginFormProps) => {
                     render={({ field }) => (
                         <FormItem>
                             <FormLabel>
-                                <p className="text-lg">
-                                    email
+                                <p className="text-xl">
+                                    Email
                                 </p>
                             </FormLabel>
                             <FormControl>
-                                <Input type="email" placeholder="enter your email" {...field} className="text-lg" />
+                                <Input type="email" placeholder="enter your email" {...field} className="text-xl" />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -69,7 +69,7 @@ const LoginForm = (props: LoginFormProps) => {
                         <FormItem>
                             <FormLabel>
                                 <p className="text-lg">
-                                    password
+                                    Password
                                 </p>
                             </FormLabel>
                             <FormControl>
@@ -79,7 +79,7 @@ const LoginForm = (props: LoginFormProps) => {
                         </FormItem>
                     )}
                 />
-                <Button type="submit" className="text-lg" >submit</Button>
+                <Button type="submit" className="text-lg m-auto w-full" >Submit</Button>
             </form>
         </Form>
     )
