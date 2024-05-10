@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
+import { useAutoAnimate } from '@formkit/auto-animate/react'
 import { Button } from "@/components/ui/button"
 import {
     Form,
@@ -30,6 +31,8 @@ const FormSchema = z.object({
 })
 
 const LoginForm = (props: LoginFormProps) => {
+    const [parent] = useAutoAnimate({ duration: 1000 })
+
     const form = useForm<z.infer<typeof FormSchema>>({
         resolver: zodResolver(FormSchema),
         defaultValues: {
@@ -44,43 +47,47 @@ const LoginForm = (props: LoginFormProps) => {
 
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-                <FormField
-                    control={form.control}
-                    name="email"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>
-                                <p className="text-xl">
-                                    Email
-                                </p>
-                            </FormLabel>
-                            <FormControl>
-                                <Input type="email" placeholder="enter your email" {...field} className="text-xl" />
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-                <FormField
-                    control={form.control}
-                    name="password"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>
-                                <p className="text-lg">
-                                    Password
-                                </p>
-                            </FormLabel>
-                            <FormControl>
-                                <Input type="password" placeholder="enter your password" {...field} className="text-lg" />
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-                <Button type="submit" className="text-lg m-auto w-full" >Submit</Button>
-            </form>
+            <div ref={parent}>
+
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                    <FormField
+                        control={form.control}
+                        name="email"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>
+                                    <p className="text-xl">
+                                        Email
+                                    </p>
+                                </FormLabel>
+                                <FormControl>
+                                    <Input type="email" placeholder="enter your email" {...field} className="text-xl" />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name="password"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>
+                                    <p className="text-lg">
+                                        Password
+                                    </p>
+                                </FormLabel>
+                                <FormControl>
+                                    <Input type="password" placeholder="enter your password" {...field} className="text-lg" />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <Button type="submit" className="text-lg m-auto w-full" >Submit</Button>
+                </form>
+
+            </div>
         </Form>
     )
 }

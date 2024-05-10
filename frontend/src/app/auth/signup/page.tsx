@@ -5,7 +5,10 @@ type Props = {}
 
 const SignupPage = (props: Props) => {
     return (
-        <Signup />
+        <>
+            <h1 className="text-5xl mb-20">Sign Up</h1>
+            <Signup />
+        </>
     )
 }
 

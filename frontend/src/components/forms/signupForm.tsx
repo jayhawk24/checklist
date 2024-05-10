@@ -47,15 +47,15 @@ const SignupForm = (props: SignupFormProps) => {
 
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
                 <FormField
                     control={form.control}
                     name="name"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>name</FormLabel>
+                            <FormLabel className="text-xl">Name</FormLabel>
                             <FormControl>
-                                <Input type="text" placeholder="enter your name" {...field} />
+                                <Input className="text-xl" type="text" placeholder="enter your name" {...field} />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -66,9 +66,9 @@ const SignupForm = (props: SignupFormProps) => {
                     name="email"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>email</FormLabel>
+                            <FormLabel className="text-xl">Email</FormLabel>
                             <FormControl>
-                                <Input type="email" placeholder="enter your email" {...field} />
+                                <Input className="text-xl" type="email" placeholder="enter your email" {...field} />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -79,15 +79,15 @@ const SignupForm = (props: SignupFormProps) => {
                     name="password"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>password</FormLabel>
+                            <FormLabel className="text-xl">Password</FormLabel>
                             <FormControl>
-                                <Input type="password" placeholder="enter your password" {...field} />
+                                <Input className="text-xl" type="password" placeholder="enter your password" {...field} />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
                     )}
                 />
-                <Button type="submit">submit</Button>
+                <Button type="submit" className="text-xl" >Submit</Button>
             </form>
         </Form>
     )

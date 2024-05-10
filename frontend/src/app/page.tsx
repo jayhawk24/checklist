@@ -6,6 +6,7 @@ import {
 } from "@/components/ui/carousel"
 import { Button } from "@/components/ui/button";
 import { ChevronRight } from "lucide-react";
+import Link from "next/link";
 
 export default function Home() {
 
@@ -48,7 +49,9 @@ export default function Home() {
             Experience the power of effortless organization and start conquering your to-do list today. Sign up for ticklist and take the first step towards a more organized, productive, and fulfilling life.
           </p>
           <Button className="text-xl font-bold text-primary-foreground">
-            LOGIN <ChevronRight />
+            <Link href={'/auth/login'}>
+              LOGIN <ChevronRight />
+            </Link>
           </Button>
         </div>
       </div>
