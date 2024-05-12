@@ -1,5 +1,5 @@
 "use client"
-import React, { Suspense, useEffect, useState } from 'react'
+import React from 'react'
 import { Task, TaskStatus, useAddTasks, useUserTasks } from "@/service/tasks-services"
 import ChecklistItem from './ticklistItem';
 import {
@@ -19,13 +19,14 @@ import { TaskStatusMultiSelect } from '../commons/taskStatusSelect';
 import { useSearchParams } from 'next/navigation';
 import LoadingSpinner from '../commons/loadingSpinner';
 import { DatePicker } from '../commons/datePicker';
+import { useAutoAnimate } from '@formkit/auto-animate/react';
 
 
 
 
 const Ticklist = () => {
     const [date, setDate] = React.useState<Date>()
-
+    const [parent] = useAutoAnimate()
     const searchParams = useSearchParams()
     const userTasks = useUserTasks(searchParams.toString() || "")
 
@@ -53,10 +54,10 @@ const Ticklist = () => {
     }
 
 
-    return <div className='flex flex-col'>
+    return <div className='flex flex-col' ref={parent}>
         <div className="flex mb-3 flex-wrap justify-between gap-y-2">
             <TaskStatusMultiSelect values={values} onChange={setValues} />
-            <DatePicker date={date} setDate={setDate} label="Pick a date" />
+            <DatePicker date={date} setDate={setDate} label="Filter by date" />
         </div>
         {
             userTasks.isLoading && <div className='flex justify-center items-center my-10 '>

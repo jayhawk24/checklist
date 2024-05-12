@@ -18,7 +18,7 @@ export default function Signup() {
     const handleSubmit = ({ name, email, password }: SignupRequest) => {
 
         toast.promise(signupMutation.mutateAsync({ name, email, password }), {
-            loading: "Signin up...",
+            loading: "Signing up...",
             success: "Signup successful.",
             error: "Invalid email or password."
         }).then(() => router.push("/auth/login"))

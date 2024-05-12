@@ -48,8 +48,8 @@ export default function Home() {
           <p className="text-lg">
             Experience the power of effortless organization and start conquering your to-do list today. Sign up for ticklist and take the first step towards a more organized, productive, and fulfilling life.
           </p>
-          <Button className="text-xl font-bold text-primary-foreground">
-            <Link href={'/auth/login'}>
+          <Button className="text-xl font-bold text-primary-foreground ">
+            <Link href={'/auth/login'} className="flex flex-nowrap">
               LOGIN <ChevronRight />
             </Link>
           </Button>
