@@ -61,8 +61,9 @@ const ChecklistItem = ({ task }: Props) => {
     return (
         <Drawer  >
             <DrawerTrigger>
-                <div ref={setNodeRef} {...attributes} {...listeners} className='border dark:border-white  rounded-lg p-4 m-2 ml-0 relative' style={{ transform: CSS.Transform.toString(transform) }}>
-                    <div className="flex w-full justify-between">
+                <div className='border dark:border-white rounded-lg p-4 m-2 ml-0 relative overflow-hidden' style={{ transform: CSS.Transform.toString(transform) }}>
+                    <div ref={setNodeRef} {...attributes} {...listeners} className='absolute inline-block h-14 w-3 top-2 left-0 bg-stripes-white bg-stripes'></div>
+                    <div className="flex w-full justify-between ml-2">
                         <div className='flex flex-col items-start'>
                             <p>{task.title}</p>
                             <p className='text-sm dark:text-slate-400'>{task.description}</p>

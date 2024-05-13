@@ -1,5 +1,4 @@
 "use client"
-import LoadingSpinner from '@/components/commons/loadingSpinner'
 import Ticklist from '@/components/ticklist/ticklist'
 import { useUserProfile } from '@/service/profile-service'
 import { useRouter } from 'next/navigation'
@@ -11,10 +10,6 @@ const TasksPage = () => {
 
     if (userProfile.isError) {
         router.push('/login')
-    }
-
-    if (userProfile.isLoading) {
-        return <LoadingSpinner />
     }
 
     return (
