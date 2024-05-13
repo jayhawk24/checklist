@@ -16,6 +16,8 @@ import { useQueryClient } from '@tanstack/react-query'
 import { Badge } from '../ui/badge'
 import { getTaskStatusAndColor } from '@/service/commons'
 import { Trash2Icon } from 'lucide-react'
+import { useSortable } from '@dnd-kit/sortable'
+import { CSS } from '@dnd-kit/utilities'
 
 type Props = {
     task: Task
@@ -25,6 +27,7 @@ const ChecklistItem = ({ task }: Props) => {
     const queryClient = useQueryClient()
     const updateTaskMutation = useUpdateTask()
     const deleteTaskMutation = useDeleteTask()
+    const { attributes, listeners, setNodeRef, transform } = useSortable({ id: task.id })
 
     const handleSubmit = (task: Partial<Task>) => {
         toast.promise(updateTaskMutation.mutateAsync(task), {
@@ -56,9 +59,9 @@ const ChecklistItem = ({ task }: Props) => {
     }
 
     return (
-        <Drawer>
+        <Drawer  >
             <DrawerTrigger>
-                <div className='border dark:border-white  rounded-lg p-4 m-2 ml-0 relative'>
+                <div ref={setNodeRef} {...attributes} {...listeners} className='border dark:border-white  rounded-lg p-4 m-2 ml-0 relative' style={{ transform: CSS.Transform.toString(transform) }}>
                     <div className="flex w-full justify-between">
                         <div className='flex flex-col items-start'>
                             <p>{task.title}</p>

@@ -1,5 +1,5 @@
 "use client"
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Task, TaskStatus, useAddTasks, useUserTasks } from "@/service/tasks-services"
 import ChecklistItem from './ticklistItem';
 import {
@@ -20,27 +20,35 @@ import { useSearchParams } from 'next/navigation';
 import LoadingSpinner from '../commons/loadingSpinner';
 import { DatePicker } from '../commons/datePicker';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
+import DragableTasks from './dragableTasks';
 
 
+let emptyTask: Task = {
+    id: "",
+    title: "",
+    description: "",
+    status: TaskStatus.todo,
+    created_at: "",
+    updated_at: "",
+}
 
 
 const Ticklist = () => {
-    const [date, setDate] = React.useState<Date>()
+    const [date, setDate] = useState<Date>()
     const [parent] = useAutoAnimate()
     const searchParams = useSearchParams()
-    const userTasks = useUserTasks(searchParams.toString() || "")
+    const userTasksQuery = useUserTasks(searchParams.toString() || "")
+    const [userTasks, setUserTasks] = useState<Task[]>([])
 
     const addTaskMutation = useAddTasks()
     const queryClient = useQueryClient()
     const [values, setValues] = React.useState<TaskStatus[]>([TaskStatus.todo, TaskStatus.done, TaskStatus.in_progress])
-    let emptyTask: Task = {
-        id: "",
-        title: "",
-        description: "",
-        status: TaskStatus.todo,
-        created_at: "",
-        updated_at: "",
-    }
+
+    useEffect(() => {
+        if (userTasksQuery.isSuccess) {
+            setUserTasks(userTasksQuery?.data?.items || [])
+        }
+    }, [userTasksQuery.status])
 
     const addTask = (taskData: Partial<Task>) => {
         toast.promise(addTaskMutation.mutateAsync(taskData), {
@@ -54,26 +62,31 @@ const Ticklist = () => {
     }
 
 
+
     return <div className='flex flex-col' ref={parent}>
         <div className="flex mb-3 flex-wrap justify-between gap-y-2">
             <TaskStatusMultiSelect values={values} onChange={setValues} />
             <DatePicker date={date} setDate={setDate} label="Filter by date" />
         </div>
         {
-            userTasks.isLoading && <div className='flex justify-center items-center my-10 '>
+            userTasksQuery.isLoading && <div className='flex justify-center items-center my-10 '>
                 <LoadingSpinner />
                 <p className='ml-2'>
                     Loading tasks...
                 </p>
             </div>
         }
-        {
-            userTasks.data?.items?.map(
-                (task) => (
-                    <ChecklistItem task={task} key={task.id} />
+        <DragableTasks tasks={userTasks} setTasks={setUserTasks}>
+            {
+                userTasks.map(
+                    (task) => (
+                        <ChecklistItem task={task} key={task.id} />
+                    )
                 )
-            )
-        }
+            }
+        </DragableTasks>
+
+
         <Drawer>
             <DrawerTrigger>
                 <div className='border border-white rounded-lg p-4 m-2 ml-0 relative'>
