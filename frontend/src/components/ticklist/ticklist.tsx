@@ -1,7 +1,7 @@
 "use client"
 import React, { useEffect, useState } from 'react'
 import { Task, TaskStatus, useAddTasks, useUserTasks } from "@/service/tasks-services"
-import ChecklistItem from './ticklistItem';
+import TicklistItem from './ticklistItem';
 import {
     Drawer,
     DrawerClose,
@@ -48,7 +48,7 @@ const Ticklist = () => {
         if (userTasksQuery.isSuccess) {
             setUserTasks(userTasksQuery?.data?.items || [])
         }
-    }, [userTasksQuery.status])
+    }, [userTasksQuery])
 
     const addTask = (taskData: Partial<Task>) => {
         toast.promise(addTaskMutation.mutateAsync(taskData), {
@@ -66,7 +66,7 @@ const Ticklist = () => {
     return <div className='flex flex-col' ref={parent}>
         <div className="flex mb-3 flex-wrap justify-between gap-y-2">
             <TaskStatusMultiSelect values={values} onChange={setValues} />
-            <DatePicker date={date} setDate={setDate} label="Filter by date" />
+            <DatePicker date={date} setDate={setDate} label="Filter by date" filter />
         </div>
         {
             userTasksQuery.isLoading && <div className='flex justify-center items-center my-10 '>
@@ -80,7 +80,7 @@ const Ticklist = () => {
             {
                 userTasks.map(
                     (task) => (
-                        <ChecklistItem task={task} key={task.id} />
+                        <TicklistItem task={task} key={task.id} />
                     )
                 )
             }

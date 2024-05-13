@@ -13,8 +13,8 @@ export type Task = {
     title: string;
     description?: string;
     status: TaskStatus;
-    start?: string;
-    due?: string;
+    start?: Date;
+    due?: Date;
     created_at: string;
     updated_at: string;
 };

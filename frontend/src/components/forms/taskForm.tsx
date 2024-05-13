@@ -15,6 +15,7 @@ import { useForm } from 'react-hook-form'
 import { Input } from '../ui/input'
 import { Button } from '../ui/button'
 import { TaskStatusSelect } from '../commons/taskStatusSelect'
+import { DatePicker } from '../commons/datePicker'
 
 type Props = {
     task: Task
@@ -25,6 +26,7 @@ const TaskFormSchema = z.object({
     title: z.string().min(1, "Title is required"),
     description: z.string().optional(),
     status: z.nativeEnum(TaskStatus),
+    due: z.date().optional()
 })
 const TaskForm = ({ task, onSubmit }: Props) => {
     const taskForm = useForm<z.infer<typeof TaskFormSchema>>({
@@ -32,7 +34,8 @@ const TaskForm = ({ task, onSubmit }: Props) => {
         defaultValues: {
             title: task.title,
             description: task?.description || "",
-            status: task.status
+            status: task.status,
+            due: task?.due || undefined
         }
     })
 
@@ -70,19 +73,36 @@ const TaskForm = ({ task, onSubmit }: Props) => {
                         </FormItem>
                     )}
                 />
-                <FormField
-                    control={taskForm.control}
-                    name="status"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Status</FormLabel>
-                            <FormControl>
-                                <TaskStatusSelect value={field.value} onChange={field.onChange} />
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
+                <div className="flex items-end justify-between">
+
+                    <FormField
+                        control={taskForm.control}
+                        name="status"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Status</FormLabel>
+                                <FormControl>
+                                    <TaskStatusSelect value={field.value} onChange={field.onChange} />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+
+                    <FormField
+                        control={taskForm.control}
+                        name="due"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormControl>
+                                    <DatePicker date={field.value} setDate={field.onChange} label="Due date" />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+
+                </div>
                 <Button type='submit' onSubmit={() => handleSubmit(task)}>Submit</Button>
             </form>
         </Form>
