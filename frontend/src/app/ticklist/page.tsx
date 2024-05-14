@@ -31,7 +31,7 @@ const TasksPage = () => {
                     <Ticklist />
                 </Suspense>
             </div>
-        </main >
+        </main>
     )
 }
 

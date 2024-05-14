@@ -41,6 +41,15 @@ export function DatePicker({ date, setDate, label, filter }: Props) {
         }
     }
 
+    React.useEffect(() => {
+        if (filter) {
+            const params = new URLSearchParams(searchParams)
+            if (params.has('due')) {
+                setDate(new Date(params.get('due') as string))
+            }
+        }
+    }, [])
+
     return (
         <Popover modal={true} >
             <PopoverTrigger asChild>

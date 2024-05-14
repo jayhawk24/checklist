@@ -16,7 +16,6 @@ import { Input } from '../ui/input'
 import { Button } from '../ui/button'
 import { TaskStatusSelect } from '../commons/taskStatusSelect'
 import { DatePicker } from '../commons/datePicker'
-import { formatRFC3339 } from 'date-fns'
 
 type Props = {
     task: Task

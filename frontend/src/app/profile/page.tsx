@@ -1,14 +1,19 @@
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+"use client"
+import ProfileForm from '@/components/forms/profileForm'
 import React from 'react'
 
-type Props = {}
+const ProfilePage = () => {
 
-const ProfilePage = (props: Props) => {
+
     return (
-        <Avatar>
-            <AvatarImage src="https://github.com/shadcn.png" />
-            <AvatarFallback>CN</AvatarFallback>
-        </Avatar>
+        <main className='mt-7 space-y-10 justify-center flex-col'>
+            <h1 className='text-5xl'>
+                My Profile
+            </h1>
+            <div className='flex items-center space-x-2 flex-col'>
+                <ProfileForm />
+            </div>
+        </main>
     )
 }
 
