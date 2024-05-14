@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { endOfDay, format, startOfDay, formatRFC3339 } from "date-fns"
+import { endOfDay, format, startOfDay, formatRFC3339, formatISO } from "date-fns"
 import { Calendar as CalendarIcon } from "lucide-react"
 
 import { cn } from "@/lib/utils"
@@ -32,12 +32,10 @@ export function DatePicker({ date, setDate, label, filter }: Props) {
             const params = new URLSearchParams(searchParams)
 
             if (date) {
-                params.set('due__lt', formatRFC3339(endOfDay(date)))
-                params.set('due__gt', formatRFC3339(startOfDay(date)))
+                params.set('due', formatISO(date))
             }
             else {
-                params.delete('due__lt')
-                params.delete('due__gt')
+                params.delete('due')
             }
             router.push(pathname + "?" + params.toString())
         }
