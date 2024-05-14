@@ -39,3 +39,14 @@ export const useUpdateProfile = () =>
         mutationKey: ["updateProfile"],
         mutationFn: updateProfile
     });
+
+const updateAvatar = async (avatar: FormData) => {
+    const { data } = await axiosInstance.put("/users/me/avatar", avatar);
+    return data;
+};
+
+export const useUpdateAvatar = () =>
+    useMutation({
+        mutationKey: ["updateAvatar"],
+        mutationFn: updateAvatar
+    });

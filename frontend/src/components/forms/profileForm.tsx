@@ -5,7 +5,6 @@ import { useForm } from "react-hook-form";
 import {
     Form,
     FormControl,
-    FormDescription,
     FormField,
     FormItem,
     FormLabel,
@@ -13,41 +12,30 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { ChangeEvent, useState } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { useUpdateProfile, useUserProfile } from "@/service/profile-service";
+import { useUpdateAvatar, useUpdateProfile, useUserProfile } from "@/service/profile-service";
 import toast from "react-hot-toast";
 import { useQueryClient } from "@tanstack/react-query";
-
-function getImageData(event: ChangeEvent<HTMLInputElement>) {
-    // FileList is immutable, so we need to create a new one
-    const dataTransfer = new DataTransfer();
-
-    // Add newly uploaded images
-    Array.from(event.target.files!).forEach((image) =>
-        dataTransfer.items.add(image)
-    );
-
-    const files = dataTransfer.files;
-    const displayUrl = URL.createObjectURL(event.target.files![0]);
-
-    return { files, displayUrl };
-}
+import { getImageData } from "@/lib/utils";
 
 const ProfileFormSchema = z.object({
     image: typeof window === 'undefined' ? z.any() : z.instanceof(FileList).optional(),
     name: z.string().min(1, 'Title is required'),
     email: z.string().email('Invalid email address').min(1, 'Email is required'),
-    password: z.string().min(8, 'Password must be at least 8 characters').optional(),
-    old_password: z.string().min(8, 'Old password must be at least 8 characters').optional(),
+    password: z.string().optional(),
+    old_password: z.string().optional(),
 })
 
 const ProfileForm = () => {
-    const { data: user } = useUserProfile()
     const [preview, setPreview] = useState("");
+
+    const { data: user } = useUserProfile()
+
     const updateProfileMutation = useUpdateProfile()
+    const updateAvatarMutation = useUpdateAvatar()
     const queryClient = useQueryClient()
 
     const profileForm = useForm<z.infer<typeof ProfileFormSchema>>({
@@ -55,19 +43,28 @@ const ProfileForm = () => {
         defaultValues: {
             name: user?.name,
             email: user?.email,
-            password: '',
-            old_password: '',
         }
     });
 
     function handleSubmit(data: z.infer<typeof ProfileFormSchema>) {
-        const updatedData = { ...user, ...data }
+        const updatedData = data
+        if (!data.password) {
+            delete updatedData.password
+            delete updatedData.old_password
+        }
+
         toast.promise(updateProfileMutation.mutateAsync(updatedData), {
             loading: 'Updating...',
             success: 'Profile updated successfully',
             error: 'Error updating profile',
         }).then(() => queryClient.invalidateQueries({ queryKey: ['userProfile'] }))
 
+        if (data.image) {
+            console.log(data.image)
+            const formData = new FormData();
+            formData.append('image', data.image.files?.item[0] as File);
+            updateAvatarMutation.mutateAsync(formData)
+        }
     }
 
     return (
