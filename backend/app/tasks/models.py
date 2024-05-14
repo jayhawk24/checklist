@@ -19,7 +19,7 @@ class Tasks(Base):
     )
     user: Mapped["Users"] = relationship(back_populates="tasks")
 
-    start = Column(DateTime, nullable=True)
-    due = Column(DateTime, nullable=True)
+    start = Column(DateTime(timezone=True), nullable=True)
+    due = Column(DateTime(timezone=True), nullable=True)
     created_at = Column(DateTime, nullable=False, default=datetime.utcnow)
     updated_at = Column(DateTime, nullable=False, default=datetime.utcnow)
