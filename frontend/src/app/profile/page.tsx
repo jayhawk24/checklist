@@ -11,7 +11,9 @@ const ProfilePage = () => {
                 My Profile
             </h1>
             <div className='flex items-center space-x-2 flex-col'>
-                <ProfileForm />
+                <div className="border border-secondary p-6 md:p-16 rounded-xl">
+                    <ProfileForm />
+                </div>
             </div>
         </main>
     )

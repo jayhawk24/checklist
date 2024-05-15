@@ -13,8 +13,7 @@ cloudinary.config(
 
 async def upload_image(image: UploadFile):
     try:
-        print(image)
-        upload_result = upload(image.file)
+        upload_result = await upload(image.file)
         file_url = upload_result["secure_url"]
         return file_url
     except Exception as e:

@@ -62,7 +62,7 @@ const ProfileForm = () => {
         if (data.image) {
             console.log(data.image)
             const formData = new FormData();
-            formData.append('image', data.image.files?.item[0] as File);
+            formData.append('image', data.image.item(0) as File);
             updateAvatarMutation.mutateAsync(formData)
         }
     }
@@ -70,7 +70,7 @@ const ProfileForm = () => {
     return (
         <Form {...profileForm}>
             <form
-                className="flex w-full space-x-4"
+                className="flex flex-col md:flex-row w-full space-x-4 items-center"
                 onSubmit={profileForm.handleSubmit(handleSubmit)}
             >
                 <Avatar className="w-24 h-24 group">
@@ -103,9 +103,9 @@ const ProfileForm = () => {
                         name="name"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel className="text-xl">Title</FormLabel>
+                                <FormLabel className="md:text-xl text-lg">Title</FormLabel>
                                 <FormControl>
-                                    <Input className="text-xl" type="text" placeholder="Your Name" {...field} />
+                                    <Input className="md:text-xl text-lg" type="text" placeholder="Your Name" {...field} />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -116,9 +116,9 @@ const ProfileForm = () => {
                         name="email"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel className="text-xl">Email</FormLabel>
+                                <FormLabel className="md:text-xl text-lg">Email</FormLabel>
                                 <FormControl>
-                                    <Input className="text-xl" type="email" placeholder="enter your email" {...field} />
+                                    <Input className="md:text-xl text-lg" type="email" placeholder="enter your email" {...field} />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -129,9 +129,9 @@ const ProfileForm = () => {
                         name="password"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel className="text-xl">Password</FormLabel>
+                                <FormLabel className="md:text-xl text-lg">Password</FormLabel>
                                 <FormControl>
-                                    <Input className="text-xl" type="password" placeholder="enter your password" {...field} />
+                                    <Input className="md:text-xl text-lg" type="password" placeholder="enter your password" {...field} />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -142,9 +142,9 @@ const ProfileForm = () => {
                         name="old_password"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel className="text-xl">Old Password</FormLabel>
+                                <FormLabel className="md:text-xl text-lg">Old Password</FormLabel>
                                 <FormControl>
-                                    <Input className="text-xl" type="password" placeholder="enter your old password" {...field} />
+                                    <Input className="md:text-xl text-lg" type="password" placeholder="enter your old password" {...field} />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>

@@ -87,7 +87,7 @@ const SignupForm = (props: SignupFormProps) => {
                         </FormItem>
                     )}
                 />
-                <Button type="submit" className="text-xl" >Submit</Button>
+                <Button type="submit" className="text-xl w-full" >Submit</Button>
             </form>
         </Form>
     )

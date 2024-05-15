@@ -44,8 +44,8 @@ export default function Home() {
             </CarouselItem>
           </CarouselContent>
         </Carousel>
-        <div className="flex gap-20 items-center">
-          <p className="text-lg">
+        <div className="flex md:gap-20 items-center flex-col md:flex-row gap-5">
+          <p className="md:text-lg">
             Experience the power of effortless organization and start conquering your to-do list today. Sign up for ticklist and take the first step towards a more organized, productive, and fulfilling life.
           </p>
           <Button className="text-xl font-bold text-primary-foreground ">

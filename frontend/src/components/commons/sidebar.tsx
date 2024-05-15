@@ -2,12 +2,17 @@
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { MenuIcon } from "lucide-react"
 import SidebarContent from "./sidebarContent"
+import Link from "next/link"
 
 
 export const MobileDashboardHeader = () => {
     return (
-        <div className="flex px-4">
-            <span className="text-2xl font-extrabold">✅ TickList</span>
+        <div className="flex">
+            <span className="text-2xl font-extrabold">
+                <Link href={'/'}>
+                    ✅ TickList
+                </Link>
+            </span>
         </div>
     )
 }
