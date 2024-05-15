@@ -86,7 +86,7 @@ const SidebarContent = () => {
             <DarkModeToggle />
             <div className="mt-8 space-y-4">
                 {links.map((navItem) => (
-                    <Link href={navItem.link} key={navItem.link} className={`flex items-center rounded-lg px-4 py-2.5 transition duration-200 hover:bg-cyan-900 ${navItem.isActive ? 'bg-cyan-900' : ""}`}>
+                    <Link href={navItem.link} key={navItem.link} className={`flex items-center rounded-lg px-4 py-2.5 transition duration-200 hover:bg-cyan-900 hover:dark:text-white hover:text-primary-foreground ${navItem.isActive ? 'bg-cyan-900 text-primary-foreground dark:text-white' : ""}`}>
                         {navItem.icon}
                         <span className="ml-3">{navItem.title}</span>
                     </Link>))

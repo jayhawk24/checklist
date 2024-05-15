@@ -17,7 +17,7 @@ export function TaskStatusSelect({ value, onChange }: Props) {
     return (
         <ToggleGroup type="single" value={value} onValueChange={onChange} className="flex justify-start">
             {Object.values(TaskStatus).map(status =>
-                <ToggleGroupItem value={status} key={status} aria-label={`Toggle ${status}`}>
+                <ToggleGroupItem variant={'outline'} className="text-nowrap dark:text-slate-400 text-slate-700" value={status} key={status} aria-label={`Toggle ${status}`}>
                     {getTaskStatusAndColor(status)[0]}
                 </ToggleGroupItem>
             )}
@@ -55,7 +55,7 @@ export function TaskStatusMultiSelect(
     return (
         <ToggleGroup type="multiple" className="flex justify-start" value={values} onValueChange={(value) => handleChange(value as TaskStatus[])}>
             {Object.values(TaskStatus).map(status =>
-                <ToggleGroupItem value={status} key={status} aria-label={`Toggle ${status}`}>
+                <ToggleGroupItem className="text-nowrap" value={status} key={status} aria-label={`Toggle ${status}`}>
                     {getTaskStatusAndColor(status)[0]}
                 </ToggleGroupItem>
             )}

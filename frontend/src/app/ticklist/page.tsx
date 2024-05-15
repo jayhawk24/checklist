@@ -13,23 +13,16 @@ const TasksPage = () => {
     }
 
     return (
-        <main className='mt-7 space-y-10 justify-center flex-col'>
-            <h1 className='text-5xl'>
-                My tasks
-            </h1>
-            <div className='flex flex-col sm:w-2/3 space-y-10'>
-                {/* <div className="flex max-w-full max-h-full justify-around">
-                    <Image src="/images/undraw_completed_tasks_vs6q.svg" alt='tasks image' height={150} width={300} />
-                    <Calendar
-                        mode="single"
-                        selected={date}
-                        onSelect={setDate}
-                        className="rounded-lg border"
-                    />
-                </div> */}
-                <Suspense>
-                    <Ticklist />
-                </Suspense>
+        <main className='flex mt-4 '>
+            <div className="border border-secondary md:p-16 p-4 rounded-xl space-y-10 lg:w-2/3">
+                <h1 className='text-5xl'>
+                    My tasks
+                </h1>
+                <div className='flex flex-col space-y-10'>
+                    <Suspense>
+                        <Ticklist />
+                    </Suspense>
+                </div>
             </div>
         </main>
     )

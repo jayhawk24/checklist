@@ -12,15 +12,14 @@ type Props = {
 const DragableTasks = ({ tasks, setTasks, children }: Props) => {
 
     const reorderTasks = (e: DragEndEvent) => {
-        if (!e.over) return;
+        if (!e.over) return
 
-        if (e.active.id !== e.over.id) {
+        if (e.active.id !== e?.over?.id) {
             setTasks((tasks) => {
                 const oldIndex = tasks.findIndex((task) => task.id === e.active.id.toString());
                 const newIndex = tasks.findIndex((task) => task.id === e.over!.id.toString());
                 return arrayMove(tasks, oldIndex, newIndex);
-            }
-            )
+            })
         }
 
     }

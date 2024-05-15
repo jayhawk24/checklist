@@ -73,8 +73,7 @@ const TaskForm = ({ task, onSubmit }: Props) => {
                         </FormItem>
                     )}
                 />
-                <div className="flex items-end justify-between">
-
+                <div className="flex items-end justify-between flex-wrap gap-y-2">
                     <FormField
                         control={taskForm.control}
                         name="status"

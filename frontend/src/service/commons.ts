@@ -15,7 +15,7 @@ export const getTaskStatusAndColor = (status: TaskStatus) => {
         case TaskStatus.done:
             return ["Done", "bg-lime-700"];
         case TaskStatus.in_progress:
-            return ["In progress", "bg-indigo-700"];
+            return ["In Progress", "bg-indigo-700"];
         default:
             return "unkown";
     }

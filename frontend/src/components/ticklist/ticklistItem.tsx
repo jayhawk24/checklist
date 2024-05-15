@@ -43,7 +43,9 @@ const TicklistItem = ({ task }: Props) => {
                 )
             )
     }
-    const handleDelete = (task: Task) => {
+    const handleDelete = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+        e.stopPropagation()
+
         toast.promise(deleteTaskMutation.mutateAsync(task.id), {
             loading: "Deleting task...",
             error: "Error deleting task.",
@@ -61,7 +63,7 @@ const TicklistItem = ({ task }: Props) => {
     return (
         <Drawer  >
             <DrawerTrigger>
-                <div className='border dark:border-white rounded-lg p-4 m-2 ml-0 relative overflow-hidden' style={{ transform: CSS.Transform.toString(transform) }}>
+                <div className='border dark:border-white rounded-lg p-4 my-2 relative overflow-hidden' style={{ transform: CSS.Transform.toString(transform) }}>
                     <div ref={setNodeRef} {...attributes} {...listeners} className='absolute inline-block h-14 w-3 top-2 left-0 bg-stripes-white bg-stripes'></div>
                     <div className="flex w-full justify-between ml-2">
                         <div className='flex flex-col items-start'>
@@ -72,7 +74,7 @@ const TicklistItem = ({ task }: Props) => {
                             <Badge variant={'outline'} className={getTaskStatusAndColor(task.status)[1]}>
                                 {getTaskStatusAndColor(task.status)[0]}
                             </Badge>
-                            <Badge variant={'destructive'} className='h-10 w-10 z-10' onClick={() => handleDelete(task)} >
+                            <Badge variant={'destructive'} className='h-10 w-10 z-10' onClick={(e) => handleDelete(e)} >
                                 <Trash2Icon />
                             </Badge>
                         </div>
@@ -88,8 +90,8 @@ const TicklistItem = ({ task }: Props) => {
                     <TaskForm task={task} onSubmit={handleSubmit} />
                 </div>
                 <DrawerFooter>
-                    <DrawerClose>
-                        <Button variant="outline">Cancel</Button>
+                    <DrawerClose className='w-full'>
+                        <Button variant="outline" className='w-full'>Cancel</Button>
                     </DrawerClose>
                 </DrawerFooter>
             </DrawerContent>

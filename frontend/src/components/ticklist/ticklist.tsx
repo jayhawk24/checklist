@@ -64,7 +64,7 @@ const Ticklist = () => {
 
 
     return <div className='flex flex-col' ref={parent}>
-        <div className="flex mb-3 flex-wrap justify-between gap-y-2">
+        <div className="flex mb-3 flex-wrap justify-between gap-2">
             <TaskStatusMultiSelect values={values} onChange={setValues} />
             <DatePicker date={date} setDate={setDate} label="Filter by date" filter />
         </div>
