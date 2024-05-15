@@ -159,4 +159,7 @@ def update_avatar(
 
     user.avatar = url
 
+    db.add(user)
+    db.commit()
+
     return {"url": url}
