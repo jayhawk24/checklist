@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -30,13 +30,17 @@ const ProfileFormSchema = z.object({
 })
 
 const ProfileForm = () => {
-    const [preview, setPreview] = useState("");
-
     const { data: user } = useUserProfile()
+    const [preview, setPreview] = useState(user?.avatar);
+
 
     const updateProfileMutation = useUpdateProfile()
     const updateAvatarMutation = useUpdateAvatar()
     const queryClient = useQueryClient()
+
+    useEffect(() => {
+        setPreview(user?.avatar)
+    }, [user])
 
     const profileForm = useForm<z.infer<typeof ProfileFormSchema>>({
         resolver: zodResolver(ProfileFormSchema),
@@ -60,10 +64,13 @@ const ProfileForm = () => {
         }).then(() => queryClient.invalidateQueries({ queryKey: ['userProfile'] }))
 
         if (data.image) {
-            console.log(data.image)
             const formData = new FormData();
             formData.append('image', data.image.item(0) as File);
-            updateAvatarMutation.mutateAsync(formData)
+            toast.promise(updateAvatarMutation.mutateAsync(formData), {
+                loading: 'Uploading image...',
+                success: 'Picture updated successfully',
+                error: 'Error updating picture',
+            }).then(() => queryClient.invalidateQueries({ queryKey: ['userProfile'] }))
         }
     }
 
