@@ -76,20 +76,11 @@ const Ticklist = () => {
                 </p>
             </div>
         }
-        <DragableTasks tasks={userTasks} setTasks={setUserTasks}>
-            {
-                userTasks.map(
-                    (task) => (
-                        <TicklistItem task={task} key={task.id} />
-                    )
-                )
-            }
-        </DragableTasks>
-
+        <DragableTasks tasks={userTasks} setTasks={setUserTasks} />
 
         <Drawer>
             <DrawerTrigger>
-                <div className='border border-white rounded-lg p-4 m-2 ml-0 relative'>
+                <div className='border border-white rounded-lg p-4 my-2 ml-0 relative'>
                     <p className='text-slate-400'>Add a new task</p>
                 </div>
             </DrawerTrigger>
