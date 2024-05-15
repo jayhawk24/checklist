@@ -9,8 +9,7 @@ def get_uuid():
     return uuid.uuid4()
 
 
-def validate_file_size_type(file: IO):
-    FILE_SIZE = 2097152  # 2MB
+def validate_file(file: IO):
 
     accepted_file_types = [
         "image/png",
@@ -43,11 +42,3 @@ def validate_file_size_type(file: IO):
             status_code=status.HTTP_415_UNSUPPORTED_MEDIA_TYPE,
             detail="Unsupported file type",
         )
-
-    real_file_size = 0
-    for chunk in file.file:
-        real_file_size += len(chunk)
-        if real_file_size > FILE_SIZE:
-            raise HTTPException(
-                status_code=status.HTTP_413_REQUEST_ENTITY_TOO_LARGE, detail="Too large"
-            )

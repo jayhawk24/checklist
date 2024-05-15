@@ -1,7 +1,14 @@
-import asyncio
 from users.models import Users
 from datetime import timedelta, datetime
-from fastapi import Depends, HTTPException, status, APIRouter, Response, UploadFile
+from fastapi import (
+    Depends,
+    HTTPException,
+    status,
+    APIRouter,
+    Response,
+    UploadFile,
+    BackgroundTasks,
+)
 from users.schemas import (
     SignUpRequestSchema,
     SignUpResponseSchema,
@@ -13,10 +20,10 @@ from users.schemas import (
 from sqlalchemy.orm import Session
 from db.database import get_db
 from auth.utils import verify_password, hash_pass
-from commons.utils import validate_file_size_type
+from commons.utils import validate_file
 from auth.tokens import create_access_token, create_refresh_token, get_current_user
 from core.config import FRONTEND_URL, JWT_ACCESS_TOKEN_EXPIRE_MINUTES
-from commons.cloudinary import upload_image
+from commons.cloudinary import upload_image, delete_image
 
 user_router = APIRouter(prefix="/users", tags=["Users"])
 
@@ -136,19 +143,19 @@ async def update_profile(
 
 
 @user_router.put("/me/avatar")
-async def update_avatar(
+def update_avatar(
     image: UploadFile,
+    bg_task: BackgroundTasks,
     user: Users = Depends(get_current_user),
     db: Session = Depends(get_db),
 ):
-    validate_file_size_type(image)
+    validate_file(image)
 
-    url = await upload_image(image)
-    print(url)
+    url = upload_image(image)
 
     if user.avatar:
         # delete previous image
-        pass
+        bg_task.add_task(delete_image, user.avatar)
 
     user.avatar = url
 

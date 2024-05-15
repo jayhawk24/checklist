@@ -3,10 +3,10 @@ from pydantic import BaseModel, constr, EmailStr, ConfigDict
 
 
 class UpdateProfileRequestSchema(BaseModel):
-    name: Optional[str]
-    email: Optional[EmailStr]
-    password: Optional[constr(min_length=8, max_length=50)]
-    old_password: Optional[constr(min_length=8, max_length=50)]
+    name: Optional[str] = None
+    email: Optional[EmailStr] = None
+    password: Optional[constr(min_length=8, max_length=50)] = None
+    old_password: Optional[constr(min_length=8, max_length=50)] = None
 
 
 class UserSchema(BaseModel):
