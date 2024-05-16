@@ -1,3 +1,4 @@
+import logging
 from users.models import Users
 from datetime import timedelta, datetime
 from fastapi import (
@@ -26,6 +27,8 @@ from core.config import FRONTEND_URL, JWT_ACCESS_TOKEN_EXPIRE_MINUTES
 from commons.cloudinary import upload_image, delete_image
 
 user_router = APIRouter(prefix="/users", tags=["Users"])
+
+logger = logging.getLogger("user_handler")
 
 
 @user_router.post("/signin", response_model=LoginResponseSchema)
@@ -91,6 +94,7 @@ async def signup(payload: SignUpRequestSchema, db: Session = Depends(get_db)):
     try:
         db.commit()
     except Exception as e:
+        logger.error(e)
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Something went wrong.",
