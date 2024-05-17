@@ -2,11 +2,16 @@ import logging
 import pytest
 import sqlalchemy as sa
 from fastapi.testclient import TestClient
-from sqlalchemy.orm import sessionmaker
-from core.config import SQLALCHEMY_DATABASE_URL
+from sqlalchemy.orm import sessionmaker, Session
+from users.models import Users
+from auth.utils import hash_pass
+
+# from core.config import SQLALCHEMY_DATABASE_URL
 
 from db.database import Base, get_db
 from main import app
+
+SQLALCHEMY_DATABASE_URL = "sqlite:///./test.db"
 
 engine = sa.create_engine(
     SQLALCHEMY_DATABASE_URL,
@@ -66,3 +71,25 @@ def client(session):
     app.dependency_overrides[get_db] = override_get_db
     yield TestClient(app)
     del app.dependency_overrides[get_db]
+
+
+@pytest.fixture()
+def get_user_tokens(client, session: Session):
+
+    user = Users(
+        **{
+            "name": "testconf",
+            "email": "test@test.com",
+            "password": hash_pass("testtest"),
+        }
+    )
+    session.add(user)
+    session.commit()
+
+    response = client.post(
+        "/users/signin",
+        json={"email": "test@test.com", "password": "testtest"},
+    )
+    response = response.json()
+
+    return [response["access_token"], response["refresh_token"]]

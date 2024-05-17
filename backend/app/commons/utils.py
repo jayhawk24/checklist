@@ -6,7 +6,7 @@ import filetype
 def get_uuid():
     import uuid
 
-    return uuid.uuid4()
+    return str(uuid.uuid4())
 
 
 def validate_file(file: IO):

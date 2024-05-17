@@ -121,8 +121,7 @@ async def update_profile(
     user: Users = Depends(get_current_user),
     db: Session = Depends(get_db),
 ) -> UserSchema:
-    user.name = payload.name
-    user.email = payload.email
+    db.query(Users).filter(Users.id == user.id).update(payload.dict(exclude_unset=True))
 
     if payload.password and payload.old_password:
         if not verify_password(payload.old_password, user.password):

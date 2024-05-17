@@ -19,20 +19,25 @@ def test_signin(client):
     assert response.status_code == 200
 
 
-def test_get_profile(client):
-    test_signin(client)
+def test_get_profile(client, get_user_tokens):
 
-    response = client.get("/users/me")
-
-    assert response.status_code == 200
-    assert response.json()["name"] == TEST_USER["name"]
-    assert response.json()["email"] == TEST_USER["email"]
-
-
-def test_update_profile(client):
-    test_signin(client)
-
-    response = client.put("/users/me", json={"name": "updated test"})
+    access_token = get_user_tokens[0]
+    response = client.get(
+        url="/users/me", headers={"Authorization": f"Bearer {access_token}"}
+    )
 
     assert response.status_code == 200
-    assert response.json()["name"] == "updated test"
+    assert response.json()["name"] == "testconf"
+    assert response.json()["email"] == "test@test.com"
+
+
+def test_update_profile(client, get_user_tokens):
+    access_token = get_user_tokens[0]
+    response = client.put(
+        url="/users/me",
+        headers={"Authorization": f"Bearer {access_token}"},
+        json={"email": "test@updated.com"},
+    )
+
+    assert response.status_code == 200
+    assert response.json()["email"] == "test@updated.com"
