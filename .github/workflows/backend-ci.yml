@@ -11,7 +11,7 @@ on:
 
 env:
     FRONTEND_URL: ""
-    DATABASE_URL: ""
+    DATABASE_URL: "sqlite:///./test.db"
     JWT_SECRET_KEY: "secret"
     JWT_ALGORITHM: "HS256"
     JWT_ACCESS_TOKEN_EXPIRE_MINUTES: "300"
@@ -52,9 +52,9 @@ jobs:
             - name: Run pytest
               uses: pavelzw/pytest-action@v2
               with:
-                verbose: true
-                emoji: true
-                job-summary: true
-                custom-arguments: '-q'
-                click-to-expand: true
-                report-title: 'Test Report'
+                  verbose: true
+                  emoji: true
+                  job-summary: true
+                  custom-arguments: "-q"
+                  click-to-expand: true
+                  report-title: "Test Report"
