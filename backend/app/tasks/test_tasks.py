@@ -26,10 +26,8 @@ def test_update_task(client, get_user_tokens):
         "/tasks", headers={"Authorization": f"Bearer {get_user_tokens[0]}"}
     ).json()
 
-    print(tasks)
-
     response = client.put(
-        f"/tasks/{tasks['items'][0]['id']}",
+        f"/tasks/{tasks[0]['id']}",
         json={"title": "Test Task", "description": "Test Description"},
         headers={"Authorization": f"Bearer {get_user_tokens[0]}"},
     )
@@ -46,7 +44,7 @@ def test_delete_task(client, get_user_tokens):
     ).json()
 
     response = client.delete(
-        f"/tasks/{tasks['items'][0]['id']}",
+        f"/tasks/{tasks[0]['id']}",
         headers={"Authorization": f"Bearer {get_user_tokens[0]}"},
     )
 

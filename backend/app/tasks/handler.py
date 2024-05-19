@@ -1,3 +1,4 @@
+from typing import List
 from fastapi import Depends, APIRouter, HTTPException
 from users.models import Users
 from auth.tokens import get_current_user
@@ -12,10 +13,8 @@ from tasks.schemas import (
     TaskFilters,
 )
 
-from fastapi_pagination.ext.sqlalchemy import paginate
 
 from fastapi_filter import FilterDepends
-from fastapi_pagination import Page, add_pagination
 
 tasks_router = APIRouter(prefix="/tasks", tags=["Tasks"])
 
@@ -25,12 +24,13 @@ def get_tasks(
     user: Users = Depends(get_current_user),
     task_filters: TaskFilters = FilterDepends(TaskFilters),
     db: Session = Depends(get_db),
-) -> Page[TasksResponseSchema]:
+) -> List[TasksResponseSchema]:
     query = task_filters.filter(select(Tasks))
 
-    tasks = query.filter(Tasks.user_id == user.id).order_by(Tasks.created_at.desc())
+    result = query.filter(Tasks.user_id == user.id).order_by(Tasks.created_at.desc())
+    tasks = db.execute(result).scalars().all()
 
-    return paginate(db, tasks)
+    return tasks
 
 
 @tasks_router.get("/{id}")
@@ -91,6 +91,3 @@ def update_task(
     db.commit()
 
     return {"detail": "Task updated successfully."}
-
-
-add_pagination(tasks_router)
