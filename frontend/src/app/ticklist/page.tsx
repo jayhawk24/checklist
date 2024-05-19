@@ -13,8 +13,8 @@ const TasksPage = () => {
     }
 
     return (
-        <main className='flex mt-4 '>
-            <div className="border border-secondary md:p-16 p-4 rounded-xl space-y-10 lg:w-2/3">
+        <main className='flex md:mt-7 mt-10 justify-center'>
+            <div className="border border-secondary md:p-16 p-5 rounded-xl space-y-10 lg:w-2/3">
                 <h1 className='text-5xl'>
                     My tasks
                 </h1>

@@ -1,7 +1,6 @@
 "use client"
 import React, { useEffect, useState } from 'react'
 import { Task, TaskStatus, useAddTasks, useUserTasks } from "@/service/tasks-services"
-import TicklistItem from './ticklistItem';
 import {
     Drawer,
     DrawerClose,
@@ -46,7 +45,7 @@ const Ticklist = () => {
 
     useEffect(() => {
         if (userTasksQuery.isSuccess) {
-            setUserTasks(userTasksQuery?.data?.items || [])
+            setUserTasks(userTasksQuery?.data || [])
         }
     }, [userTasksQuery])
 

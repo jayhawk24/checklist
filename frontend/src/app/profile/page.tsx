@@ -7,11 +7,11 @@ const ProfilePage = () => {
 
     return (
         <main className='mt-7 space-y-10 justify-center flex-col'>
-            <h1 className='text-5xl'>
-                My Profile
-            </h1>
             <div className='flex items-center space-x-2 flex-col'>
-                <div className="border border-secondary p-6 md:p-16 rounded-xl">
+                <div className="border border-secondary md:p-16 p-4 rounded-xl space-y-10 lg:w-2/3">
+                    <h1 className='text-5xl w-full text-center md:text-left'>
+                        My Profile
+                    </h1>
                     <ProfileForm />
                 </div>
             </div>

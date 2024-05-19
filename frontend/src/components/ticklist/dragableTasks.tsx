@@ -25,8 +25,7 @@ const DragableTasks = ({ tasks, setTasks }: Props) => {
     return (
         <DndContext onDragEnd={reorderTasks}>
             <SortableContext items={tasks}>
-                {tasks.map((task) => { console.log(task.id); return <TicklistItem task={task} key={task.id} /> }
-                )}
+                {tasks.map((task) => <TicklistItem task={task} key={task.id} />)}
             </SortableContext>
         </DndContext>
     )

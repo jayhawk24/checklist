@@ -25,7 +25,7 @@ export default function Signup() {
 
     }
 
-    return <div className='flex flex-col justify-between h-full'>
+    return <div className='flex flex-col justify-between'>
         <SignupForm onSubmit={handleSubmit} />
     </div>
 

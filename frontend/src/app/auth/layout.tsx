@@ -6,8 +6,10 @@ type Props = {
 
 const LayoutPage = ({ children }: Props) => {
     return (
-        <main className="flex min-h-screen flex-col items-center md:p-24 p-5">
-            {children}
+        <main className="flex h-full flex-col md:mt-0 mt-6 md:p-24 p-5">
+            <div className="border border-secondary p-6 md:p-16 rounded-xl">
+                {children}
+            </div>
         </main>
     )
 }

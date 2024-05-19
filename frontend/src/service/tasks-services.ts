@@ -20,9 +20,7 @@ export type Task = {
 };
 
 const getTasks = async (query: string) => {
-    const { data } = await axiosInstance.get<PageResponse<Task>>(
-        "/tasks?" + query
-    );
+    const { data } = await axiosInstance.get<Task[]>("/tasks?" + query);
     return data;
 };
 
