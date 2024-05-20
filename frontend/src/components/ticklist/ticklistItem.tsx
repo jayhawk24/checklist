@@ -16,8 +16,6 @@ import { useQueryClient } from '@tanstack/react-query'
 import { Badge } from '../ui/badge'
 import { getTaskStatusAndColor } from '@/service/commons'
 import { Trash2Icon } from 'lucide-react'
-import { useSortable } from '@dnd-kit/sortable'
-import { CSS } from '@dnd-kit/utilities'
 
 type Props = {
     task: Task
@@ -27,7 +25,6 @@ const TicklistItem = ({ task }: Props) => {
     const queryClient = useQueryClient()
     const updateTaskMutation = useUpdateTask()
     const deleteTaskMutation = useDeleteTask()
-    const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: task.id })
 
     const handleSubmit = (task: Partial<Task>) => {
         toast.promise(updateTaskMutation.mutateAsync(task), {
@@ -63,9 +60,8 @@ const TicklistItem = ({ task }: Props) => {
     return (
         <Drawer>
             <DrawerTrigger>
-                <div className='border dark:border-white rounded-lg p-4 my-2 relative overflow-hidden bg-secondary' style={{ transform: CSS.Transform.toString(transform), transition: transition }}>
-                    <div ref={setNodeRef} {...attributes} {...listeners} className='absolute inline-block h-14 w-3 top-2 left-0 bg-stripes-white bg-stripes'></div>
-                    <div className="flex w-full justify-between ml-2">
+                <div className='border dark:border-white rounded-lg p-4 my-2 relative overflow-hidden bg-secondary'>
+                    <div className="flex w-full justify-between">
                         <div className='flex flex-col items-start'>
                             <p>{task.title}</p>
                             <p className='text-sm dark:text-slate-400'>{task.description}</p>

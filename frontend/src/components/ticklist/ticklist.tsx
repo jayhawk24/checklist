@@ -19,8 +19,8 @@ import { useSearchParams } from 'next/navigation';
 import LoadingSpinner from '../commons/loadingSpinner';
 import { DatePicker } from '../commons/datePicker';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
-import DragableTasks from './dragableTasks';
 
+import TicklistItem from './ticklistItem'
 
 let emptyTask: Task = {
     id: "",
@@ -60,8 +60,6 @@ const Ticklist = () => {
         })
     }
 
-
-
     return <div className='flex flex-col' ref={parent}>
         <div className="flex mb-3 flex-wrap justify-between gap-2">
             <TaskStatusMultiSelect values={values} onChange={setValues} />
@@ -75,7 +73,7 @@ const Ticklist = () => {
                 </p>
             </div>
         }
-        <DragableTasks tasks={userTasks} setTasks={setUserTasks} />
+        {userTasks.map((task) => <TicklistItem task={task} key={task.id} />)}
 
         <Drawer>
             <DrawerTrigger>
