@@ -16,7 +16,7 @@ import { useEffect, useState } from "react";
 export default function Login() {
     const router = useRouter()
     const userProfile = useUserProfile()
-    const [openDialog, setOpenDialog] = useState(true)
+    const [openDialog, setOpenDialog] = useState(false)
 
     if (userProfile.data) {
         router.push("/ticklist")
