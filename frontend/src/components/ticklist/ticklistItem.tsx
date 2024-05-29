@@ -1,5 +1,5 @@
 import { Task, useDeleteTask, useUpdateTask } from '@/service/tasks-services'
-import React from 'react'
+import React, { useState } from 'react'
 import {
     Drawer,
     DrawerClose,
@@ -25,6 +25,7 @@ const TicklistItem = ({ task }: Props) => {
     const queryClient = useQueryClient()
     const updateTaskMutation = useUpdateTask()
     const deleteTaskMutation = useDeleteTask()
+    const [isDrawerOpen, setIsDrawerOpen] = useState(false)
 
     const handleSubmit = (task: Partial<Task>) => {
         toast.promise(updateTaskMutation.mutateAsync(task), {
@@ -33,11 +34,12 @@ const TicklistItem = ({ task }: Props) => {
             success: "Task updated successfully.",
         })
             .then(
-                () => queryClient.invalidateQueries(
-                    {
+                () => {
+                    queryClient.invalidateQueries({
                         queryKey: ["tasks"],
-                    }
-                )
+                    })
+                    setIsDrawerOpen(false)
+                }
             )
     }
     const handleDelete = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
@@ -58,7 +60,7 @@ const TicklistItem = ({ task }: Props) => {
     }
 
     return (
-        <Drawer>
+        <Drawer open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>
             <DrawerTrigger>
                 <div className='border dark:border-white rounded-lg p-4 my-2 relative overflow-hidden bg-secondary'>
                     <div className="flex w-full justify-between">

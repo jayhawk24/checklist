@@ -21,6 +21,7 @@ import { DatePicker } from '../commons/datePicker';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 
 import TicklistItem from './ticklistItem'
+import { set } from 'date-fns';
 
 let emptyTask: Task = {
     id: "",
@@ -38,6 +39,7 @@ const Ticklist = () => {
     const searchParams = useSearchParams()
     const userTasksQuery = useUserTasks(searchParams.toString() || "")
     const [userTasks, setUserTasks] = useState<Task[]>([])
+    const [isNewTaskDrawerOpen, setIsNewTaskDrawerOpen] = useState(false)
 
     const addTaskMutation = useAddTasks()
     const queryClient = useQueryClient()
@@ -54,10 +56,13 @@ const Ticklist = () => {
             loading: "Adding task...",
             success: "Task added successfully",
             error: "Error adding task"
-        })
-        queryClient.invalidateQueries({
-            queryKey: ["tasks"]
-        })
+        }).then(() => {
+            queryClient.invalidateQueries({
+                queryKey: ["tasks", searchParams.toString()]
+            })
+            setIsNewTaskDrawerOpen(false)
+        }
+        )
     }
 
     return <div className='flex flex-col' ref={parent}>
@@ -75,7 +80,7 @@ const Ticklist = () => {
         }
         {userTasks.map((task) => <TicklistItem task={task} key={task.id} />)}
 
-        <Drawer>
+        <Drawer open={isNewTaskDrawerOpen} onOpenChange={setIsNewTaskDrawerOpen}>
             <DrawerTrigger>
                 <div className='border border-white rounded-lg p-4 my-2 ml-0 relative'>
                     <p className='text-slate-400'>Add a new task</p>
@@ -90,8 +95,8 @@ const Ticklist = () => {
                     <TaskForm task={emptyTask} onSubmit={addTask} />
                 </div>
                 <DrawerFooter>
-                    <DrawerClose>
-                        <Button variant="outline">Cancel</Button>
+                    <DrawerClose className='w-full'>
+                        <Button className='w-full' variant="outline">Cancel</Button>
                     </DrawerClose>
                 </DrawerFooter>
             </DrawerContent>
